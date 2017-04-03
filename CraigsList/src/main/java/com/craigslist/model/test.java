@@ -1,3 +1,5 @@
+package com.craigslist.model;
+
 public class Test{
 
   public void test(){
