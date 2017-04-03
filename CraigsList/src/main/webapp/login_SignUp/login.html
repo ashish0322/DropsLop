@@ -1,0 +1,30 @@
+
+
+<div class="row" style="margin-top:20px">
+    <div class="col-xs-12 ">
+		<form  ng-submit="login()" role="form">
+			<fieldset>
+				<h2>Please Sign In</h2>
+				<hr class="colorgraph">
+				<div class="form-group" id ="userCheck" style="color:red;margin-left:10px;display:none;">*{{userCheck}}</div>
+				<div class="form-group">
+                    <input type="email" ng-model="user.email" id="email" class="form-control input-lg" placeholder="Email Address">
+				</div>
+				<div class="form-group">
+                    <input type="password" ng-model="user.password" id="password" class="form-control input-lg" placeholder="Password">
+				</div>
+				<span class="button-checkbox">
+					<button type="button" class="btn" data-color="info">Remember Me</button>
+                    <input type="checkbox" name="remember_me" id="remember_me" checked="checked" class="hidden">
+					<a href="" class="btn btn-link pull-right">Forgot Password?</a>
+				</span>
+				<hr class="colorgraph">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12">
+                        <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In">
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

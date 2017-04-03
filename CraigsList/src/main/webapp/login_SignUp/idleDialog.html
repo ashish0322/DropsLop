@@ -1,0 +1,16 @@
+
+<div class="uk-modal-header">
+    <h3 id="title">You are Idle. Do Something!</h3>
+</div>
+            
+<div class="uk-modal-body" ng-idle-countdown="countdown" ng-init="countdown=10">
+    <div id="msg-text">
+        
+        <div class="uk-progress uk-progress-warning uk-progress-mini uk-progress-striped">
+            <div class="uk-progress-bar" ng-style="{'width':countdown+'0%'}"></div>
+        </div>
+
+        <progressbar id="progress" max="10" value="countdown" animate="true" class="progress-striped active"></progressbar>
+       	You will be logged out in {{sprintf:[countdown]}} second(s).
+    </div>
+</div>
