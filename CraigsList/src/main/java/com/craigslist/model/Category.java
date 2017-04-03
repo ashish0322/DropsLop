@@ -43,7 +43,7 @@ public class Category {
         this.products = new HashSet<Product>();
     }
 
-    Category() {
+    public Category() {
     }
 
     
