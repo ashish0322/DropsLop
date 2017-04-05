@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.craigslist.controller.UserController;
 import com.craigslist.dao.UserDao;
-import com.craigslist.model.Login;
 import com.craigslist.model.Session;
 import com.craigslist.model.User;
 import com.craigslist.util.ObjectFactory;
@@ -60,8 +59,7 @@ public class UserControllerImpl implements UserController{
       String encryptedPass = PasswordEncrypt.getSHA1(user.getPassword());
       String role = "admin";
       User newUser = new User(user.getFirstName(), user.getLastName(), user.getDisplayName(), user.getEmail(), encryptedPass);
-      Login login = new Login(user.getEmail(),encryptedPass,role);
-      userDao.create(newUser,login);
+      userDao.create(newUser);
     }
     catch (Exception ex) {
       return JSONObject.quote("Error creating the user: " + ex.toString());

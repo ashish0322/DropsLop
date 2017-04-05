@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="dropslop" ng-controller="layoutController">
+<html >
 <head>
 <meta charset="ISO-8859-1">
 <title>Dropslop</title>
@@ -61,8 +61,45 @@
 	<script src="vendor/ng-idle/angular-idle.min.js"></script>
 	<script src="vendor/ngStorage.js" type="text/javascript"></script>
 	
+<!-- UiKit -->
+	<script src="vendor/uikit/js/uikit.min.js" type="text/javascript"></script>
+	<script src="vendor/uikit/js/components/accordion.min.js" type="text/javascript"></script>
+	<script src="vendor/uikit/js/components/notify.min.js" type="text/javascript"></script>
+	<script src="vendor/uikit/js/components/datepicker.js" type="text/javascript"></script>
+	<script src="vendor/uikit/js/components/datepicker.min.js" type="text/javascript"></script>
+	<script src="vendor/uikit/js/components/form-select.min.js" type="text/javascript"></script>
+	
+	 <!-- uikit & components css -->
+    
+    <link href="vendor/uikit/css/uikit.gradient.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/notify.gradient.min.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/datepicker.gradient.min.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/form-select.min.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/form-advanced.min.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/progress.almost-flat.min.css" rel="stylesheet">
+    <link href="vendor/uikit/css/components/accordion.min.css" rel="stylesheet">
+    <link href="css/uikitRestyle.css" rel="stylesheet">
+	
+	<style type="text/css">
+	[ng\:cloak], [ng-cloak], .ng-cloak {
+		display: none !important;
+	}
+	
+	.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+	.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+	</style>
+	
 </head>
-<body>
+<body ng-app="dropslop" ng-controller="layoutController" class="ng-cloak">
 <div id="wrapper">
 
  <!-- Navigation -->
@@ -80,12 +117,12 @@
 
         <!-- Top Navigation: Left Menu -->	
        					
-       <ul class="nav navbar-left navbar-top-links" ng-hide="showLogin=='false'">
+       <ul class="nav navbar-left navbar-top-links" ng-show="!authenticated">
  		<li><a ng-click="login();"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a ng-click="signUp();"><span class="glyphicon glyphicon-user"></span>Signup</a></li>
        </ul>
         <!-- Top Navigation: Right Menu -->
-        <ul class="nav navbar-right navbar-top-links" ng-hide="userlogged=='false'">
+        <ul class="nav navbar-right navbar-top-links" ng-show="authenticated">
             <li class="dropdown navbar-inverse">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
@@ -222,14 +259,14 @@
 </div>
 	<!-- loading js files required by angular -->
 	<script type="text/javascript" src="angularJs/app.js"></script>
-	<script type="text/javascript" src="config/config.js"></script>
+	<script type="text/javascript" src="angularJs/config.js"></script>
 	<script type="text/javascript" src="angularJs/apiService.js"></script>
-	<script type="text/javascript" src="angularJs/layout/layout.js"></script>
-	<script type="text/javascript" src="angularJs/login/login.js"></script>
-	<script type="text/javascript" src="angularJs/registration/registration.js"></script>
-	<script type="text/javascript" src="angularJs/admin/admin.js"></script>
-	<script type="text/javascript" src="admin/categories/categoriesController.js"></script>
-	
+	<script type="text/javascript" src="angularJs/layout.js"></script>
+	<script type="text/javascript" src="angularJs/login.js"></script>
+	<script type="text/javascript" src="angularJs/registration.js"></script>
+	<script type="text/javascript" src="angularJs/admin.js"></script>
+	<script type="text/javascript" src="angularJs/categoriesController.js"></script>
+	<script type="text/javascript" src="angularJs/uiService.js"></script>
 	<!-- loading js files required by ui  -->
 	<script type="text/javascript" src="js/registration.js"></script>
 	

@@ -7,30 +7,32 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 								'loginServivce',
 								'registrationService',
 								'adminService',
-								'ui.bootstrap']);
+								'ui.bootstrap','UIService']);
 
-	dropslop.config(function($routeProvider){
+	dropslop.config(function($routeProvider,$httpProvider){
 			$routeProvider
 				.when("/",{
-					templateUrl : "login_SignUp/main.html",
+					templateUrl : "html/main.html",
 					controller :  "layoutController"
 				})
 				.when("/logout",{
-					templateUrl : "login_SignUp/main.html",
+					templateUrl : "html/main.html",
 					controller :  "logoutController"
 				})
 				.when('/admin/adminDashboard', {
 			      	access:'private', 
-			      	templateUrl: 'admin/adminView.html', 
+			      	templateUrl: 'html/admin/adminView.html', 
 			      	controller: 'adminController'
 			      	})
 			    .when('/admin/manageCategories', {
 			      	access:'private', 
-			      	templateUrl: 'admin/categories/manageCategories.html', 
+			      	templateUrl: 'html/admin/categories.html', 
 			      	controller: 'categoriesController'
 			      	})
       	
 			    .otherwise({ redirectTo: '/error' })
+			    
+			    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 		
 	})
 	
@@ -75,7 +77,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 	 	$idle.watch();
 	 	$rootScope.$on('$idleStart', function() {
 			$rootScope.idlePopup=ngDialog.open({ 
-				template: 'login_SignUp/idleDialog.html'
+				template: 'html/idleDialog.html'
 			});
 		});
 
@@ -90,14 +92,13 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 		/* End watching for idle */
 		$localStorage.logged_user = 0;
 		if($localStorage.logged_user == 0){
-		$localStorage.showLogin="true";
+			
 		$localStorage.useradmin="none";
-		$localStorage.userlogged="false";
 		$localStorage.showdropdown="true";
 		
-		$rootScope.showLogin=$localStorage.showLogin;
+		$rootScope.authenticated = false;
+		
 		$rootScope.useradmin=$localStorage.useradmin;
-		$rootScope.userlogged=$localStorage.userlogged;
 		$rootScope.showdropdown=$localStorage.showdropdown;
 		}
 	})

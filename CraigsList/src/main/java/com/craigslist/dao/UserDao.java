@@ -14,8 +14,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
-
-import com.craigslist.model.Login;
 import com.craigslist.model.User;
 
 /**
@@ -48,9 +46,8 @@ public class UserDao {
   /**
    * Save the user in the database.
    */
-  public void create(User user,Login login) {
+  public void create(User user) {
     entityManager.persist(user);
-    entityManager.persist(login);
     return;
   }
   
