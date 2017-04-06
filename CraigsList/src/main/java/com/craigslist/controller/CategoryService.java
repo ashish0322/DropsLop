@@ -14,7 +14,7 @@ import com.craigslist.model.Category;
 public interface CategoryService {
 	
 	public String addCategory(Category category);
-	public String updateCategory(Category category);
+	public String updateCategory(Category category,long categoryId);
 	public Category getCategory(long id);
 	public String deleteCategory(long categoryId);
 	public List<Category> getCategories();

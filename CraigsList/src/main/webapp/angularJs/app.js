@@ -7,7 +7,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 								'loginServivce',
 								'registrationService',
 								'adminService',
-								'ui.bootstrap','UIService']);
+								'ui.bootstrap','UIService','DropslopWebSocket']);
 
 	dropslop.config(function($routeProvider,$httpProvider){
 			$routeProvider
@@ -71,7 +71,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 	});
 }])
 	
-	.run(function($rootScope,$localStorage,$idle,authUsers){
+	.run(function($rootScope,$localStorage,$idle,authUsers,ngDialog){
 			
 		/* Start wathching for idle */
 	 	$idle.watch();

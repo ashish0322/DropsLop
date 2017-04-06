@@ -1,6 +1,6 @@
 <div class="row" style="margin-top:20px">
 <div class="col-xs-12">
-		<form  ng-submit="createCategory();" role="form">
+		<form role="form">
 			<fieldset>
 				<h3>Add Category</h3>
 				<hr class="colorgraph">
@@ -13,7 +13,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12">
-                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="ADD">
+                        <input type="button" ng-click="createCategory();" class="btn btn-lg btn-primary btn-block" value="ADD">
 					</div>
 				</div>
 			</fieldset>

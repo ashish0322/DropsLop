@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService{
 	
 
 	@Override
-	@RequestMapping(value="/api/addCategory",method = RequestMethod.POST,
+	@RequestMapping(value="/api/admin/addCategory",method = RequestMethod.POST,
 	consumes = "application/json")
 	public String addCategory(@RequestBody Category category) {
 		
@@ -48,15 +48,48 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public String updateCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value="/api/admin/{categoryId}/updateCategory",method = RequestMethod.POST,
+	consumes = "application/json")
+	public String updateCategory(@RequestBody Category category, @PathVariable long categoryId) {
+			Category  modifyCategory = new Category();
+			
+		try{
+			modifyCategory = categoryDao.getById(categoryId);
+			modifyCategory.setTitle(category.getTitle());
+			modifyCategory.setDescription(category.getDescription());
+			}
+			catch(Exception e){
+			e.printStackTrace();
+			}
+		
+		try{
+			categoryDao.update(modifyCategory);
+		}
+		catch (Exception ex) {
+		      return JSONObject.quote("Error updating the category: " + ex.toString());
+	    }
+	    return JSONObject.quote("Category updated Successfully");
+		
 	}
 
 	@Override
-	public String deleteCategory(long categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value="/api/admin/{categoryId}/deleteCategory",method = RequestMethod.GET)
+	public String deleteCategory(@PathVariable long categoryId) {
+		Category category = null;
+		try{
+		category = categoryDao.getById(categoryId);
+		}
+		catch(Exception e){
+		e.printStackTrace();
+		}
+		
+		try{
+		categoryDao.delete(category);
+		}
+		catch(Exception ex){
+			return JSONObject.quote("Error updating the category: " + ex.toString());
+		}
+		return JSONObject.quote("Category deleted Successfully");
 	}
 
 	@Override
@@ -75,7 +108,7 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	@RequestMapping(value="/api/editCategory/{id}",method = RequestMethod.GET)
+	@RequestMapping(value="/api/admin/{id}/editCategory",method = RequestMethod.GET)
 	public Category getCategory(@PathVariable long id) {
 		Category category = null;
 		try{

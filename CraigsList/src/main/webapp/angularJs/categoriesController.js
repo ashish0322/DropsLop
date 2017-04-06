@@ -6,46 +6,46 @@ angular.module("adminService")
 			$scope.title = title;
 			
 			$scope.addCategory = function(){
+				$scope.category = {};
 				ngDialog.open({ 
 					template: 'html/admin/categoryForm.html',
-					controller : "categoriesController"
+					scope:$scope
 					});
-				}
+				};
 			
-			
-			$scope.createCategory = function(category){
-				console.log("Inside create Category");
-				$rootScope.successsTitle="Category added successfully";
-				$rootScope.errorTitle="Error adding category!!";
-				$rootScope.errorMessage = "Please try again";
+//	 ********************************************************* Create Category Function *********************************************************
+					
+			$scope.createCategory = function(){
+				console.log($scope.category);
 				var category =	{
 						title:$scope.category.title,
 						description:$scope.category.description
 					}
 				console.log("createCategory",category);
-				ApiService.post("/addCategory",category)
-				.success(function(data,status){
-							if(data =="Category added Successfully"){
-								ngDialog.close();
-								NotifyService.success($rootScope.successsTitle);
-								loadCategories();
-							}
-							else{
-								ngDialog.close();
-								NotifyService.warning($rootScope.errorTitle,$rootScope.errorMessage);
-							}
-						})
-				.error(function(data,status){
-					ApiService.exception(data,status);
-				});
+					ApiService.post("/admin/addCategory",category)
+					.success(function(data,status){
+								if(data =="Category added Successfully"){
+									NotifyService.success("Category added successfully");	
+									$scope.loadCategories();
+								}
+								else{
+									NotifyService.warning("Error adding category!!","Please try again");
+								}
+								ngDialog.closeAll();
+							})
+					.error(function(data,status){
+						ApiService.exception(data,status);
+					});
 			}
+
+//			********************************************************* Load Categories Function *********************************************************
 			
-			var loadCategories = function($rootScope){
+			$scope.loadCategories = function($rootScope,$localStorage){
 			
 			ApiService.call("/getCategories")
 				.success(function(data,status){
 					if(data !=null){
-						console.log("Get all categoried",data)
+						console.log("Get all categories",data)
 						$scope.cat = true;
 						$scope.categories = data;
 					}else{
@@ -55,19 +55,21 @@ angular.module("adminService")
 				.error(function(data,status){
 					ApiService.exception(data,status);
 				});
-			
 			}
 			
-			loadCategories();
 			
+		
+//			********************************************************* Edit category Function *********************************************************
+					
 			$scope.editCategory = function(id){
-				ApiService.call("/editCategory/"+id)
+				ApiService.call('/admin/'+id+'/editCategory')
 					.success(function(data,status){
 						if(data.categoryId != null){
-							$scope.editCategory = data;
+							console.log("editCategory",data);
+							$scope.categoryData = data;
 							ngDialog.open({ 
 								template: 'html/admin/modifyCategory.html',
-								controller : "categoriesController"
+								scope:$scope
 								});
 						}
 						else{
@@ -80,25 +82,69 @@ angular.module("adminService")
 					})
 				
 			}
+//			********************************************************* Update Category Function *********************************************************
 			
-			$scope.updateCategory = function(category){
-				ApiService.post("/updateCategory"+category)
+			$scope.updateCategory = function(categoryData){
+				console.log("Inside update Category",$scope.categoryData);
+				var category =	{
+						title:$scope.categoryData.title,
+						description:$scope.categoryData.description,
+					}
+				ApiService.post('/admin/'+$scope.categoryData.categoryId+'/updateCategory',category)
 					.success(function(data,status){
-						
+						if(data == "Category updated Successfully"){
+							ngDialog.close();
+							NotifyService.success("Category updated Successfully");
+							$scope.loadCategories();
+						}
+						else{
+							ngDialog.close();
+							NotifyService.warning("Error Message","Failed to update category");
+						}
 					})
 					.error(function(data,status){
 						ApiService.exception(data,status);
 					})
 			}
 			
+//			********************************************************* Delete Category Function *********************************************************
+			
+			
 			$scope.deleteCategory = function(id){
-				ApiService.call("/deleteCategory"+id)
+				
+				$localStorage.deleteid = id;
+				ApiService.call('/admin/'+id+'/editCategory')
 				.success(function(data,status){
 					if(data.categoryId != null){
-						NotifyService.success("Category Deleted Succefully!!");
+						console.log("editCategory",data);
+						$rootScope.msg = data.title;
+						ngDialog.open({ 
+							template: 'html/confirmYesNoDialog.html',
+					         scope:$scope
+							});
 					}
 					else{
 						NotifyService.warning("Error Message","Failed to retrieve category");
+					}
+					
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				})
+				
+			}
+			
+			$scope.confirm = function(){
+				console.log("Inside delete function",$localStorage.deleteid);
+				ApiService.call('/admin/'+$localStorage.deleteid+'/deleteCategory')
+				.success(function(data,status){
+					if(data == "Category deleted Successfully"){
+						ngDialog.close();
+						NotifyService.success("Category Deleted Succefully!!");
+						$scope.loadCategories();
+					}
+					else{
+						NotifyService.warning("Error Message","Failed to delete category");
 					}
 				})
 				.error(function(data,status){
@@ -106,4 +152,7 @@ angular.module("adminService")
 				})
 			}
 			
+			
+			//initial data load
+			$scope.loadCategories();
 		})

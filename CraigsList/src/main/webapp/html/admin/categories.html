@@ -15,16 +15,16 @@
     	<button ng-click="addCategory();" class="btn btn-primary btn-md pull-right"><b>+</b> Add New Category</button>
     	<br/>
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th class="text-center" >Sub-Categories</th>
             <th class="text-center">Action</th>
         </tr>
     </thead>
             <tr ng-repeat="category in categories" ng-show="cat">
-                <td>{{ category.categoryId }}</td>
                 <td>{{ category.title }}</td>
                 <td>{{ category.description }}</td>
+                <td class="text-center">{{ category.products.length }}</td>
                 <td class="text-center"><button class='btn btn-info btn-xs' ng-click="editCategory(category.categoryId);"><span class="glyphicon glyphicon-edit"></span> Edit</button> <button ng-click="deleteCategory(category.categoryId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button></td>
             </tr>
             <tr ng-show="!cat"><td style="color:red;">No Categories Found!!</td></tr>
