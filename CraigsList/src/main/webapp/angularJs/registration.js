@@ -48,7 +48,7 @@ angular.module("registrationService",[])
 									ngDialog.close();
 									$rootScope.registrationSuccessMsg=data;
 									ngDialog.open({ 
-										template: 'login_SignUp/msgboxDialog.html',
+										template: 'html/msgboxDialog.html',
 										showClose: false,
 										scope: $rootScope
 										

@@ -41,7 +41,7 @@ angular.module("loginServivce",[])
 		
 	})
 
-	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope){
+	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope,AuthenticationService){
 		
 	//	********************************************************* Login Function *********************************************************
 		$scope.login = function(user){
@@ -51,11 +51,17 @@ angular.module("loginServivce",[])
 					email:$scope.user.email,
 					password:$scope.user.password
 				}
+
+//	            AuthenticationService.ClearCredentials();
+//			AuthenticationService.Login(user,function(data)
+//					{
+//					if(data.firstName != null)
+//					  {
+					
 			ApiService.post("/login",user)
-				.success(function(data,status){
-					
-					
+			.success(function(data,status){
 					if(data.firstName != null){
+//					AuthenticationService.SetCredentials($scope.user.email, $scope.user.password);
 					$rootScope.authenticated = true;
 					$localStorage.useradmin="admin";
 					$localStorage.showdropdown="false";
@@ -86,9 +92,6 @@ angular.module("loginServivce",[])
 					}
 						
 				})
-				.error(function(data,status){
-						ApiService.exception(data,status);
-				});
 		}
 
 	});

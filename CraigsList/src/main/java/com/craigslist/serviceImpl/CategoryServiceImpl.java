@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.craigslist.controllerImplementation;
+package com.craigslist.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.craigslist.controller.CategoryService;
 import com.craigslist.dao.CategoryDao;
 import com.craigslist.model.Category;
+import com.craigslist.service.CategoryService;
 
 /**
  * @author amaheedhara
@@ -118,6 +118,21 @@ public class CategoryServiceImpl implements CategoryService{
 		e.printStackTrace();
 		}
 		return category;
+	}
+
+	@Override
+	@RequestMapping(value="/api/admin/validateCategory/{category}",method = RequestMethod.GET)
+	public String validateCategoryName(@PathVariable String category) {
+		// TODO Auto-generated method stub
+		
+		 try {
+		    	categoryDao.getCategoryByName(category);
+		    }
+		    catch (Exception ex) {
+		    	 return null;
+		    }
+		
+		 return JSONObject.quote("Category already present");
 	}
 
 	

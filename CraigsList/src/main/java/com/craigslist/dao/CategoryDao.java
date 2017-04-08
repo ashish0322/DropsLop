@@ -86,4 +86,14 @@ public class CategoryDao  {
 	    return;
 	  }
 
+	  /**
+	   * Validate category existence from the database.
+	   */
+	  public Category getCategoryByName(String title) {
+		    return (Category) entityManager.createQuery(
+		        "from Category where title = :title")
+		        .setParameter("title", title)
+		        .getSingleResult();
+		  }
+	  
 }

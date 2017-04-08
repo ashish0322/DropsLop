@@ -12,6 +12,65 @@ angular.module("adminService")
 					scope:$scope
 					});
 				};
+				
+				
+//		********************************************************* Category Validate Function *********************************************************
+				
+				// called during new category creation
+				
+				$scope.checkCategory = function(){
+					if($scope.category.title !=null){
+						var categoryTitle="";
+						categoryTitle = $scope.category.title;
+					console.log(categoryTitle);
+					ApiService.call('/admin/validateCategory/'+categoryTitle)
+						.success(function(data,status){
+							$scope.categoryCheck = data;
+							
+							if(data == '"Category already present"' || data == 'Category already present'){
+								console.log(data);
+								document.getElementById("categoryCheck").style.display = 'block';
+							}
+							else{
+								console.log("Category not present",data);
+								document.getElementById("categoryCheck").style.display = 'none';
+							}
+						})
+						.error(function(data,status){
+							ApiService.exception(data,status);
+						});
+					}
+					
+				}
+				
+				// called during updating category 
+				$scope.checkCategoryy = function(){
+					if($scope.categoryData.title !=null){
+						var categoryTitle="";
+						categoryTitle = $scope.categoryData.title;
+					console.log(categoryTitle);
+					ApiService.call('/admin/validateCategory/'+categoryTitle)
+						.success(function(data,status){
+							$scope.categoryCheck = data;
+							
+							if((data == '"Category already present"' || data == 'Category already present') 
+									&& ($scope.categoryData.title != $scope.actualTitle)){
+								console.log(data);
+								document.getElementById("categoryCheck").style.display = 'block';
+							}
+							else{
+								console.log("Category not present",data);
+								document.getElementById("categoryCheck").style.display = 'none';
+							}
+						})
+						.error(function(data,status){
+							ApiService.exception(data,status);
+						});
+					}
+					
+				}
+				
+				
 			
 //	 ********************************************************* Create Category Function *********************************************************
 					
@@ -67,6 +126,7 @@ angular.module("adminService")
 						if(data.categoryId != null){
 							console.log("editCategory",data);
 							$scope.categoryData = data;
+							$scope.actualTitle = data.title;
 							ngDialog.open({ 
 								template: 'html/admin/modifyCategory.html',
 								scope:$scope
@@ -155,4 +215,9 @@ angular.module("adminService")
 			
 			//initial data load
 			$scope.loadCategories();
+			
+//			********************************************************* Create Sub-Category Function *********************************************************
+
+			
+			
 		})

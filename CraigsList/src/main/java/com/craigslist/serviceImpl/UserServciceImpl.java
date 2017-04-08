@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.craigslist.controllerImplementation;
+package com.craigslist.serviceImpl;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.craigslist.controller.UserController;
+
 import com.craigslist.dao.UserDao;
 import com.craigslist.model.Session;
 import com.craigslist.model.User;
+import com.craigslist.service.UserService;
 import com.craigslist.util.ObjectFactory;
 import com.craigslist.util.PasswordEncrypt;
 
 /**
- * Class UserController
+ * Class UserService
  */
 @RestController
-public class UserControllerImpl implements UserController{
+public class UserServciceImpl implements UserService{
 	
   // ------------------------
   // PRIVATE FIELDS
@@ -181,7 +182,7 @@ public class UserControllerImpl implements UserController{
 					
 					HttpSession httpSession = request.getSession();
 					if (httpSession != null) {
-						Object o = httpSession.getAttribute(UserController.REST_API_SESSION_KEY);
+						Object o = httpSession.getAttribute(UserService.REST_API_SESSION_KEY);
 						if (o != null && o instanceof Session) {
 							Session session = ((Session) o);
 							return session;

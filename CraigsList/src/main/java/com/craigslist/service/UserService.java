@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.craigslist.controller;
+package com.craigslist.service;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,7 @@ import com.craigslist.model.User;
  * @author ashish
  *
  */
-public interface UserController {
+public interface UserService {
 	
 	public static final String REST_API_SESSION_KEY = "DROPSLOP_API_SESSION_KEY";
 

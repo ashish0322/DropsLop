@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.craigslist.controller;
+package com.craigslist.service;
 
 import java.util.List;
 
@@ -18,5 +18,7 @@ public interface CategoryService {
 	public Category getCategory(long id);
 	public String deleteCategory(long categoryId);
 	public List<Category> getCategories();
+	
+	public String validateCategoryName(String category);
 
 }

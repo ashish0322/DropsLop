@@ -32,7 +32,7 @@
 	<script src="vendor/angular-1.5.6/angular.js"></script>
 	<script src="vendor/angular-1.5.6/angular-route.js"></script>
 	<script src="vendor/angular-1.5.6/angular-sanitize.js"></script>
-    
+    <script src="vendor/angular-1.5.6/angular-cookies.js"></script>
 
 
 <!-- Latest compiled JavaScript -->
@@ -50,8 +50,7 @@
 
 	<script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	
-	<link href="css/ngDialog-theme-custom.css" rel="stylesheet" type="text/css">
-	<link href="css/app.css" rel="stylesheet" type="text/css">
+	
 	
 <!-- ngDialog lib -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.0.0/js/ngDialog.js"></script>
@@ -167,7 +166,7 @@
         </ul>
 
         <!-- Sidebar -->
-        <div class="navbar-default sidebar" role="navigation" ng-hide="useradmin=='none'">
+        <div class="navbar-default sidebar" role="navigation" ng-show="authenticated">
             <div class="sidebar-nav navbar-collapse">
 
                 <ul class="nav" id="side-menu">
@@ -191,7 +190,7 @@
 
             </div>
         </div>
-       <div class="collapse navbar-collapse js-navbar-collapse" ng-hide="showdropdown=='false'">
+       <div class="collapse navbar-collapse js-navbar-collapse" ng-show="!categories">
 		<ul class="nav navbar-nav">
 			<li class="dropdown dropdown-large">
 				<a class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
@@ -268,14 +267,18 @@
 	
 	<!-- loading js files required by angular -->
 	<script type="text/javascript" src="angularJs/app.js"></script>
+	
 	<script type="text/javascript" src="angularJs/config.js"></script>
 	<script type="text/javascript" src="angularJs/apiService.js"></script>
 	<script type="text/javascript" src="angularJs/layout.js"></script>
+	<script type="text/javascript" src="angularJs/authenticationService.js"></script>
 	<script type="text/javascript" src="angularJs/login.js"></script>
 	<script type="text/javascript" src="angularJs/registration.js"></script>
 	<script type="text/javascript" src="angularJs/admin.js"></script>
 	<script type="text/javascript" src="angularJs/categoriesController.js"></script>
 	<script type="text/javascript" src="angularJs/uiService.js"></script>
+	
+	
 	<!-- loading js files required by ui  -->
 	<script type="text/javascript" src="js/registration.js"></script>
 	

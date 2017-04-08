@@ -37,14 +37,14 @@ public class Category {
 	@Column(name="description",unique = true, nullable = false)
 	private String description;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="category",targetEntity=Product.class,
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="category",targetEntity=SubCategory.class,
 			cascade = CascadeType.ALL)
-	private Set<Product> products = new HashSet<Product>();
+	private Set<SubCategory> subCategories = new HashSet<SubCategory>();
 
     public Category(String title,String description) {
         this.title = title;
         this.description = description;
-        this.products = new HashSet<Product>();
+        this.subCategories = new HashSet<SubCategory>();
     }
 
     public Category() {
@@ -52,16 +52,16 @@ public class Category {
 
     
 
-    public Set<Product> getProducts() {
-		return products;
+    public Set<SubCategory> getSubCategories() {
+		return subCategories;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setSubCategories(Set<SubCategory> subCategories) {
+		this.subCategories = subCategories;
 	}
 
-	public void addProduct(Product product) {
-        getProducts().add(product);
+	public void addSubCategory(SubCategory subCategory) {
+        getSubCategories().add(subCategory);
     }
 
     public String getTitle() {

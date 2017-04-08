@@ -2,7 +2,7 @@
  * 
  */
 
-var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialog','ngSanitize','ngStorage','ngIdle',
+var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialog','ngSanitize','ngStorage','ngIdle','ngCookies',
 								'layoutService',
 								'loginServivce',
 								'registrationService',
@@ -71,7 +71,24 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 	});
 }])
 	
-	.run(function($rootScope,$localStorage,$idle,authUsers,ngDialog){
+
+ 	run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+	function run($rootScope,$localStorage,$idle,authUsers,ngDialog,$location,$cookies,$http){
+		
+		
+		 $rootScope.globals = $cookies.getObject('globals') || {};
+	        if ($rootScope.globals.currentUser) {
+	            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+	        }
+	 
+	        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+	            // redirect to login page if not logged in and trying to access a restricted page
+	            var restrictedPage = $.inArray($location.path(), ['/']) === -1;
+	            var loggedIn = $rootScope.globals.currentUser;
+	            if (restrictedPage && !loggedIn) {
+	                $location.path('/');
+	            }
+	        });
 			
 		/* Start wathching for idle */
 	 	$idle.watch();
@@ -90,18 +107,18 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			authUsers.timeout();
 		});
 		/* End watching for idle */
-		$localStorage.logged_user = 0;
-		if($localStorage.logged_user == 0){
+	
 			
 		$localStorage.useradmin="none";
 		$localStorage.showdropdown="true";
 		
 		$rootScope.authenticated = false;
+		$rootScope.categories = false;
 		
 		$rootScope.useradmin=$localStorage.useradmin;
 		$rootScope.showdropdown=$localStorage.showdropdown;
-		}
-	})
+		
+	}
 	
 	
 	

@@ -5,17 +5,15 @@ package com.craigslist.model;
 
 
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -51,11 +49,13 @@ public class User {
 	private String password;
 	
 	@Column(name = "active")
-	private int active;
+	private Boolean active = Boolean.TRUE;
+
+
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="userInfo_fk")
+	private UserInfo userInfo;
 	
 	// ------------------------
 	// PUBLIC METHODS
@@ -63,6 +63,8 @@ public class User {
 	  
 	public User() { }
 	
+	
+
 	public User(long userId) {
 		this.userId = userId;
 	}
@@ -114,14 +116,6 @@ public class User {
 		return email;
 	}
 
-	public int getActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -134,12 +128,22 @@ public class User {
 		this.password = password;
 	}
 	
-	public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 	
 }

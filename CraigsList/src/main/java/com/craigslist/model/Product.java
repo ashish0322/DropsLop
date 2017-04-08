@@ -3,6 +3,9 @@
  */
 package com.craigslist.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,8 +42,10 @@ public class Product {
 	@Column(nullable = false)
 	private String description;
 	@Column(nullable = false)
-	private int quantity;
+	private int rating;
 	
+	@Column(nullable = false)
+	private long views;
 	
 	@Column(nullable = false)
 	private String photoName; // Map with hibernate
@@ -48,32 +54,38 @@ public class Product {
     private MultipartFile photo; // Use by Data Binder
 		
     @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinColumn(name="employee")
-    private Seller seller;
-    
-    @Column(nullable = false)
+	@JoinColumn(name="seller")
+    private User user;
+
+
+	@Column(nullable = false)
     private String sellerName;
     
     @Column(nullable = false)
     private String category_name;
     
     @ManyToOne
-    @JoinColumn(name="categoryid")
-    private Category category;
+    @JoinColumn(name="subCategoryId")
+    private SubCategory subCategory;
+    
+    @OneToMany(fetch=FetchType.EAGER,mappedBy="product",targetEntity=Comment.class,
+			cascade = CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<Comment>();
 
-    public Product(String productName, String company, Seller seller,String categoryName,
-    		double price,String description,int quantity,String photoName,Category category,
+    public Product(String productName, String company, User user,String categoryName,
+    		double price,String description,int rating,String photoName,SubCategory subCategory,
     		String sellerName) {
         this.productName = productName;
         this.company = company;
-        this.seller = seller;
+        this.user = user;
         this.sellerName = sellerName;
         this.category_name=categoryName;
         this.price = price;
         this.description = description;
-        this.quantity= quantity;
+        this.rating= rating;
         this.photoName= photoName;
-        this.category = category;
+        this.subCategory = subCategory;
+        this.comments = new HashSet<Comment>();
     }
 
     public Product() {
@@ -119,12 +131,14 @@ public class Product {
 		this.description = description;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	
+
+	public int getRating() {
+		return rating;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	public String getPhotoName() {
@@ -143,14 +157,6 @@ public class Product {
 		this.photo = photo;
 	}
 
-	public Seller getEmployee() {
-		return seller;
-	}
-
-	public void setEmployee(Seller seller) {
-		this.seller = seller;
-	}
-
 	public String getCategory_name() {
 		return category_name;
 	}
@@ -159,20 +165,22 @@ public class Product {
 		this.category_name = category_name;
 	}
 
-	public Category getCategory() {
-		return category;
+
+	public SubCategory getSubCategory() {
+		return subCategory;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setSubCategory(SubCategory subCategory) {
+		this.subCategory = subCategory;
 	}
 
-	public Seller getSeller() {
-		return seller;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setSeller(Seller seller) {
-		this.seller = seller;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getSellerName() {
@@ -183,11 +191,24 @@ public class Product {
 		this.sellerName = sellerName;
 	}
 
-	
-	
+	public Set<Comment> getComments() {
+		return comments;
+	}
 
-          
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 
-   
+	public void addComment(Comment comment) {
+        getComments().add(comment);
+    }
 	
+	
+	public long getViews() {
+			return views;
+		}
+
+	public void setViews(long views) {
+		this.views = views;
+	}
 }

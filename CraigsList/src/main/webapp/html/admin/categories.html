@@ -17,15 +17,25 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th class="text-center" >Sub-Categories</th>
             <th class="text-center">Action</th>
+            <th class="text-center" >Sub-Categories</th>
+            
         </tr>
     </thead>
             <tr ng-repeat="category in categories" ng-show="cat">
                 <td>{{ category.title }}</td>
                 <td>{{ category.description }}</td>
-                <td class="text-center">{{ category.products.length }}</td>
-                <td class="text-center"><button class='btn btn-info btn-xs' ng-click="editCategory(category.categoryId);"><span class="glyphicon glyphicon-edit"></span> Edit</button> <button ng-click="deleteCategory(category.categoryId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button></td>
+                
+                <td class="text-center">
+                	<button class='btn btn-info btn-xs' ng-click="editCategory(category.categoryId);"><span class="glyphicon glyphicon-edit"></span> Edit</button> 
+                	<button ng-click="deleteCategory(category.categoryId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button>
+                </td>
+                
+                <td class="text-center">
+                	<button class='btn btn-success btn-xs'><span class="glyphicon glyphicon-view"></span>{{ category.subCategories.length }}</button>
+               	 	<button class='btn btn-primary btn-xs' ng-click="addSubCategory(category.categoryId);"><span class="glyphicon glyphicon-plus"></span> Add</button> 
+               		<button ng-click="viewSubCategory(category.categoryId);" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-view"></span>View</button>
+                </td>
             </tr>
             <tr ng-show="!cat"><td style="color:red;">No Categories Found!!</td></tr>
     </table>
