@@ -41,7 +41,7 @@ angular.module("loginServivce",[])
 		
 	})
 
-	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope,AuthenticationService){
+	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope,AuthenticationService,userPersistenceService){
 		
 	//	********************************************************* Login Function *********************************************************
 		$scope.login = function(user){
@@ -62,19 +62,24 @@ angular.module("loginServivce",[])
 			.success(function(data,status){
 					if(data.firstName != null){
 //					AuthenticationService.SetCredentials($scope.user.email, $scope.user.password);
-					$rootScope.authenticated = true;
+					$scope.navBarClass  = "navbar navbar-inverse navbar-admin";
+					$rootScope.categories = false;
+					$rootScope.authenticated = false;
 					$localStorage.useradmin="admin";
 					$localStorage.showdropdown="false";
 					
 					$rootScope.useradmin=$localStorage.useradmin;
 					$rootScope.showdropdown=$localStorage.showdropdown;
 					
-					$localStorage.logged_user = 1;
-					$localStorage.user = data;
-					$localStorage.userPk = user.userId;
-					$localStorage.displayName = data.displayName;
-					$rootScope.displayName = $localStorage.displayName;
-					$rootScope.loggedUser = $localStorage.logged_user;
+					userPersistenceService.setCookieData(data.displayName);
+					username = userPersistenceService.getCookieData();
+					console.log("userPersistenceService.getCookieData",username);
+					
+					userPersistenceService.storeUserSession(data);
+					$rootScope.displayName = username;
+					$rootScope.email = data.email;
+					
+					
 						console.log("Inside get user login",data);
 						ngDialog.close();
 					

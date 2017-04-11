@@ -3,6 +3,8 @@
  */
 package com.craigslist.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.craigslist.model.User;
@@ -23,4 +25,8 @@ public interface UserService {
 	public String updateName(long id, String email, String name);
 	
 	public void doTimeout(HttpServletRequest req);
+	
+	public List<User> getUsers();
+	
+	public User lockUnlockUser(String action,long id);
 }

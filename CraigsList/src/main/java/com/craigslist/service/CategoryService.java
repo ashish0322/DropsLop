@@ -20,5 +20,8 @@ public interface CategoryService {
 	public List<Category> getCategories();
 	
 	public String validateCategoryName(String category);
+	
+	
+	
 
 }

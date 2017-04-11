@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 /**
  * @author amaheedhara
@@ -40,11 +42,14 @@ public class UserInfo {
 		
 		private String lastLoginDate;
 		
+		private String registeredDate;
+		
 		private long ratedBy;
 		
 		private int rating;
 
 		@OneToOne(mappedBy = "userInfo",cascade = CascadeType.ALL)
+		@JsonBackReference
 		private User user;
 		
 		
@@ -170,6 +175,16 @@ public class UserInfo {
 
 		public void setUser(User user) {
 			this.user = user;
+		}
+
+
+		public String getRegisteredDate() {
+			return registeredDate;
+		}
+
+
+		public void setRegisteredDate(String registeredDate) {
+			this.registeredDate = registeredDate;
 		}
 		
 		

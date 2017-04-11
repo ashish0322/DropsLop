@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * @author amaheedhara
  *
@@ -29,6 +31,7 @@ public class Comment {
 	
 	@ManyToOne
     @JoinColumn(name="productId")
+	@JsonBackReference
     private Product product;
 	
 	

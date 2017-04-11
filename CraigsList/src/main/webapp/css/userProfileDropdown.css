@@ -1,0 +1,38 @@
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+
+@media only screen and (max-width: 768px) {
+	.navbar-login
+	{
+	    width: 250px;
+	    padding: 5px;
+	    padding-bottom: 0px;
+	}
+	
+}
+
+@media only screen and (max-width: 540px) {
+	.navbar-login
+	{
+	    width: 250px;
+	    padding: 5px;
+	    padding-bottom: 0px;
+	}
+	
+}
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 90px;
+}

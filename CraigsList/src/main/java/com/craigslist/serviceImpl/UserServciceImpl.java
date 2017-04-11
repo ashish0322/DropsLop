@@ -4,9 +4,13 @@
 package com.craigslist.serviceImpl;
 
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.craigslist.dao.UserDao;
+import com.craigslist.model.Category;
 import com.craigslist.model.Session;
 import com.craigslist.model.User;
+import com.craigslist.model.UserInfo;
 import com.craigslist.service.UserService;
 import com.craigslist.util.ObjectFactory;
 import com.craigslist.util.PasswordEncrypt;
@@ -56,10 +62,18 @@ public class UserServciceImpl implements UserService{
 	  System.out.println("FirstName is"+user.getFirstName());
     try {
     	
+      String DATE_FORMAT_NOW = "yyyy-MM-dd";
+      Date date = new Date();
+      SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+      String stringDate = sdf.format(date );
 	  // encrypting password using secure hash algorithm
       String encryptedPass = PasswordEncrypt.getSHA1(user.getPassword());
       String role = "admin";
       User newUser = new User(user.getFirstName(), user.getLastName(), user.getDisplayName(), user.getEmail(), encryptedPass);
+      UserInfo userInfo = new UserInfo();
+      userInfo.setRole("admin");
+      userInfo.setRegisteredDate(stringDate);
+      newUser.setUserInfo(userInfo);
       userDao.create(newUser);
     }
     catch (Exception ex) {
@@ -105,7 +119,7 @@ public class UserServciceImpl implements UserService{
     catch (Exception ex) {
       return JSONObject.quote("Error deleting the user: " + ex.toString());
     }
-    return "User succesfully deleted!";
+    return JSONObject.quote("User succesfully deleted");
   }
   
   
@@ -141,9 +155,9 @@ public class UserServciceImpl implements UserService{
       userDao.update(user);
     }
     catch (Exception ex) {
-      return "Error updating the user: " + ex.toString();
+      return JSONObject.quote("Error updating the user: " + ex.toString());
     }
-    return "User succesfully updated!";
+    return JSONObject.quote("User succesfully updated");
   }
   
   //Logout API 
@@ -174,6 +188,45 @@ public class UserServciceImpl implements UserService{
 		}
 	
 	
+	@Override
+	@RequestMapping(value = "/api/admin/getUsers", method = RequestMethod.GET)
+	public List<User> getUsers() {
+		
+		List<User> usersList = new ArrayList<>();
+				
+		usersList = userDao.getUsersList();
+				if(!usersList.isEmpty()){
+					return usersList;
+				}
+				else{
+					return null;
+				}
+	
+	}
+	
+	@Override
+	@RequestMapping(value = "/api/admin/{action}/lockUnlockUser/{id}", method = RequestMethod.GET)
+	public User lockUnlockUser(@PathVariable String action,@PathVariable long id) {
+		// TODO Auto-generated method stub
+		User user = null;
+		 try {
+		      user = userDao.getById(id);
+		      if(action.equalsIgnoreCase("true")){
+		 		 user.setActive(true);
+		      }
+		 	  else{
+		 		 user.setActive(false);
+		 	  }
+		      user = userDao.update(user);
+		 }
+		 catch (Exception ex) {
+		      return user;
+		    }
+		
+		 
+		return user;
+	}
+	
 	//private methods
 
 	public static Session getCurrentSession(HttpServletRequest request) {
@@ -191,6 +244,10 @@ public class UserServciceImpl implements UserService{
 				}
 			return null;
 		}
+
+	
+
+	
 
   
 } 

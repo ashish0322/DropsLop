@@ -17,14 +17,15 @@
 
     <!-- Custom CSS -->
     <link href="css/startmin.css" rel="stylesheet">
-
+	<link href="css/ace.min.css" rel="stylesheet">
+	<link href="css/usersTable.css" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="css/morris.css" rel="stylesheet">
     <link href="css/dropdown.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+    <link href="css/userProfileDropdown.css" rel="stylesheet" type="text/css">
     <!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
@@ -99,6 +100,10 @@
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
     }
+    
+    .navbar-admin {
+    background-color: #3071a9;
+	}
 	</style>
 	
 	
@@ -107,7 +112,8 @@
 <div id="wrapper" ng-controller="TaskController">
 
  <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav ng-class="navBarClass" role="navigation">
+    	
         <div class="navbar-header">
             <a class="navbar-brand" href="#">DropsLop</a>
         </div>
@@ -121,12 +127,12 @@
 
         <!-- Top Navigation: Left Menu -->	
        					
-       <ul class="nav navbar-left navbar-top-links" ng-show="!authenticated">
+       <ul class="nav navbar-left navbar-top-links" ng-show="authenticated">
  		<li><a ng-click="login();"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a ng-click="signUp();"><span class="glyphicon glyphicon-user"></span>Signup</a></li>
        </ul>
         <!-- Top Navigation: Right Menu -->
-        <ul class="nav navbar-right navbar-top-links" ng-show="authenticated">
+        <ul class="nav navbar-right navbar-top-links" ng-show="!authenticated">
             <li class="dropdown navbar-inverse">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
@@ -153,20 +159,48 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" >
                     <i class="fa fa-user fa-fw"></i>Hi {{displayName}}<b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="#/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
+                <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p>
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                         <p>
+                                         
+									        <a href="#" class="btn btn-info btn-sm">
+									          <span class="glyphicon glyphicon-cog"></span> Profile
+									        </a>
+									         
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-6 col-lg-8">
+                                        <p class="text-left small"><strong>{{email}}</strong></p>
+                                        <p class="text-left small"><b>Last logged in {{}}</b></p>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-xs-6 col-lg-12">
+                                        <p class="text-center">
+                                            <a href="#/logout" class="btn btn-danger btn-block">Logout</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        </ul>
             </li>
         </ul>
 
         <!-- Sidebar -->
-        <div class="navbar-default sidebar" role="navigation" ng-show="authenticated">
+        <div class="navbar-default sidebar" role="navigation" ng-show="!authenticated">
             <div class="sidebar-nav navbar-collapse">
 
                 <ul class="nav" id="side-menu">
@@ -184,72 +218,35 @@
                         <a href="#/admin/adminDashboard" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="#/admin/manageCategories"><i class="fa fa-sitemap fa-fw"></i> Manage Categories</a>
-                        
+                        <a href="#/admin/manageCategories" class="active"><i class="fa fa-sitemap fa-fw"></i> Manage Categories</a>
+                        </li>
+                         <li>
+                        <a href="#/admin/manageUsers" class="active"><i class="fa fa-user fa-fw"></i> Manage Users</a>
+                    </li>
+                     <li>
+                        <a href="#/admin/manageAds" class="active"><i class="fa fa-message fa-fw"></i> Manage Ads</a>
+                    </li>
                         </ul>
 
             </div>
         </div>
-       <div class="collapse navbar-collapse js-navbar-collapse" ng-show="!categories">
+       <div class="collapse navbar-collapse js-navbar-collapse" ng-show="categories">
 		<ul class="nav navbar-nav">
 			<li class="dropdown dropdown-large">
 				<a class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
 				
 				<ul class="dropdown-menu dropdown-menu-large row">
 					<li class="col-sm-3">
-						<ul>
-							<li class="dropdown-header">Glyphicons</li>
-							<li><a href="#">Available glyphs</a></li>
-							<li class="disabled"><a href="#">How to use</a></li>
-							<li><a href="#">Examples</a></li>
+						<ul ng-repeat="cat in categoriesList">
+							<li class="dropdown-header">{{cat.title}}
+								<ul ng-repeat="subCat in cat.subCategories">
+									<li style="list-style-type :none;"><a href="#">{{ subCat.name }}</a></li>
+								</ul>
+							</li>
 							<li class="divider"></li>
-							<li class="dropdown-header">Dropdowns</li>
-							<li><a href="#">Example</a></li>
-							<li><a href="#">Aligninment options</a></li>
-							<li><a href="#">Headers</a></li>
-							<li><a href="#">Disabled menu items</a></li>
 						</ul>
 					</li>
-					<li class="col-sm-3">
-						<ul>
-							<li class="dropdown-header">Button groups</li>
-							<li><a href="#">Basic example</a></li>
-							<li><a href="#">Button toolbar</a></li>
-							<li><a href="#">Sizing</a></li>
-							<li><a href="#">Nesting</a></li>
-							<li><a href="#">Vertical variation</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Button dropdowns</li>
-							<li><a href="#">Single button dropdowns</a></li>
-						</ul>
-					</li>
-					<li class="col-sm-3">
-						<ul>
-							<li class="dropdown-header">Input groups</li>
-							<li><a href="#">Basic example</a></li>
-							<li><a href="#">Sizing</a></li>
-							<li><a href="#">Checkboxes and radio addons</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Navs</li>
-							<li><a href="#">Tabs</a></li>
-							<li><a href="#">Pills</a></li>
-							<li><a href="#">Justified</a></li>
-						</ul>
-					</li>
-					<li class="col-sm-3">
-						<ul>
-							<li class="dropdown-header">Navbar</li>
-							<li><a href="#">Default navbar</a></li>
-							<li><a href="#">Buttons</a></li>
-							<li><a href="#">Text</a></li>
-							<li><a href="#">Non-nav links</a></li>
-							<li><a href="#">Component alignment</a></li>
-							<li><a href="#">Fixed to top</a></li>
-							<li><a href="#">Fixed to bottom</a></li>
-							<li><a href="#">Static top</a></li>
-							<li><a href="#">Inverted navbar</a></li>
-						</ul>
-					</li>
+					
 				</ul>
 				
 			</li>
@@ -272,12 +269,14 @@
 	<script type="text/javascript" src="angularJs/apiService.js"></script>
 	<script type="text/javascript" src="angularJs/layout.js"></script>
 	<script type="text/javascript" src="angularJs/authenticationService.js"></script>
+	<script type="text/javascript" src="angularJs/userPersistenceService.js"></script>
 	<script type="text/javascript" src="angularJs/login.js"></script>
 	<script type="text/javascript" src="angularJs/registration.js"></script>
 	<script type="text/javascript" src="angularJs/admin.js"></script>
 	<script type="text/javascript" src="angularJs/categoriesController.js"></script>
 	<script type="text/javascript" src="angularJs/uiService.js"></script>
-	
+	<script type="text/javascript" src="angularJs/manageUsersController.js"></script>
+	<script type="text/javascript" src="angularJs/dirPagination.js"></script>
 	
 	<!-- loading js files required by ui  -->
 	<script type="text/javascript" src="js/registration.js"></script>
@@ -291,7 +290,7 @@
 	<script type="text/javascript" src="js/registration.js"></script>
 	
 <footer class="footer" style="background-color: #545145;">
-  <div class="navbar navbar-inverse navbar-fixed-bottom">
+  <div class="navbar navbar-inverse">
     <div class="container">
       <p class="navbar-text pull-left">© Fantastic Four</p>
     </div>

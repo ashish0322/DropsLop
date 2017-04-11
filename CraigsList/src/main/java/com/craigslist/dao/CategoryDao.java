@@ -58,7 +58,7 @@ public class CategoryDao  {
 	  }
 	  
 	  /**
-	   * Return the category having the passed id.
+	   * Return the category having the passed title.
 	   */
 	  public Category getByTitle(String title) {
 		  

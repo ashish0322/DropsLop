@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * @author amaheedhara
  *
@@ -33,12 +36,14 @@ public class SubCategory {
 	@Column(nullable = false)
 	private String name;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="subCategory",targetEntity=Product.class,
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="subCategory",targetEntity=Product.class,
 			cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Product> products = new HashSet<Product>();
 	
 	@ManyToOne
     @JoinColumn(name="category")
+	@JsonBackReference
     private Category category;
 	
 	public SubCategory(){
@@ -67,6 +72,7 @@ public class SubCategory {
 		this.name = name;
 	}
 
+	
 	public Set<Product> getProducts() {
 		return products;
 	}

@@ -7,7 +7,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 								'loginServivce',
 								'registrationService',
 								'adminService',
-								'ui.bootstrap','UIService','DropslopWebSocket']);
+								'ui.bootstrap','UIService','DropslopWebSocket','angularUtils.directives.dirPagination']);
 
 	dropslop.config(function($routeProvider,$httpProvider){
 			$routeProvider
@@ -29,7 +29,13 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/admin/categories.html', 
 			      	controller: 'categoriesController'
 			      	})
-      	
+			    .when('/admin/manageUsers', {
+			      	access:'private', 
+			      	templateUrl: 'html/admin/manageUsers.html', 
+			      	controller: 'manageUsersController'
+			      	})
+			      	
+			      	
 			    .otherwise({ redirectTo: '/error' })
 			    
 			    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -107,16 +113,8 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			authUsers.timeout();
 		});
 		/* End watching for idle */
-	
-			
-		$localStorage.useradmin="none";
-		$localStorage.showdropdown="true";
 		
-		$rootScope.authenticated = false;
-		$rootScope.categories = false;
 		
-		$rootScope.useradmin=$localStorage.useradmin;
-		$rootScope.showdropdown=$localStorage.showdropdown;
 		
 	}
 	

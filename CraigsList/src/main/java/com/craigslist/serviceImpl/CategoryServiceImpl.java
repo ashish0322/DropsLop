@@ -26,10 +26,14 @@ import com.craigslist.service.CategoryService;
 public class CategoryServiceImpl implements CategoryService{
 	
 	
-	// Wire the UserDao used inside this controller.
+	// Inject the CategoryDao used inside this controller.
 		  @Autowired
 		  private CategoryDao categoryDao;
 	
+  /**
+   * Api add Category
+   *
+   */
 
 	@Override
 	@RequestMapping(value="/api/admin/addCategory",method = RequestMethod.POST,
@@ -46,6 +50,12 @@ public class CategoryServiceImpl implements CategoryService{
 		    }
 		    return JSONObject.quote("Category added Successfully");
 	}
+	
+	/**
+	 * Api update Category
+	 *
+	*/
+
 
 	@Override
 	@RequestMapping(value="/api/admin/{categoryId}/updateCategory",method = RequestMethod.POST,
@@ -71,6 +81,11 @@ public class CategoryServiceImpl implements CategoryService{
 	    return JSONObject.quote("Category updated Successfully");
 		
 	}
+	
+	/**
+	 * Api delete Category
+	 *
+	*/
 
 	@Override
 	@RequestMapping(value="/api/admin/{categoryId}/deleteCategory",method = RequestMethod.GET)
@@ -91,6 +106,11 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		return JSONObject.quote("Category deleted Successfully");
 	}
+	
+	/**
+	 * Api get Categories list
+	 *
+	*/
 
 	@Override
 	@RequestMapping(value="/api/getCategories",method = RequestMethod.GET)
@@ -107,6 +127,11 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 	}
 
+	/**
+	 * Api get Category by id
+	 *
+	*/
+	
 	@Override
 	@RequestMapping(value="/api/admin/{id}/editCategory",method = RequestMethod.GET)
 	public Category getCategory(@PathVariable long id) {
@@ -119,20 +144,28 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		return category;
 	}
+	
+	/**
+	 * Api to validate category existed
+	 *
+	*/
 
 	@Override
 	@RequestMapping(value="/api/admin/validateCategory/{category}",method = RequestMethod.GET)
 	public String validateCategoryName(@PathVariable String category) {
 		// TODO Auto-generated method stub
-		
+		Category cat = null;
 		 try {
-		    	categoryDao.getCategoryByName(category);
+		    	cat = categoryDao.getCategoryByName(category);
 		    }
 		    catch (Exception ex) {
 		    	 return null;
 		    }
-		
+		if(cat !=null){
 		 return JSONObject.quote("Category already present");
+		}else{
+			return null;
+		}
 	}
 
 	

@@ -218,6 +218,124 @@ angular.module("adminService")
 			
 //			********************************************************* Create Sub-Category Function *********************************************************
 
+			$scope.addSubCategory = function(categoryId){
+				$scope.subCategory = {};
+				$scope.categoryId = categoryId;
+				ngDialog.open({ 
+					template: 'html/admin/subCategoryForm.html',
+					scope:$scope
+					});
+				}
+		
+			// sub category validate function 
+			$scope.checkSubCategory = function(){
+				if($scope.subCategory.name !=null){
+					var subCategoryTitle="";
+					subCategoryTitle = $scope.subCategory.name;
+				console.log(subCategoryTitle);
+				ApiService.call('/admin/validateSubCategory/'+subCategoryTitle)
+					.success(function(data,status){
+						$scope.subCategoryCheck = data;
+						console.log(data);
+						if(data == '"Sub Category already present"' || data == 'Sub Category already present'){
+							console.log(data);
+							document.getElementById("subCategoryCheck").style.display = 'block';
+						}
+						else{
+							console.log("Sub Category not present",data);
+							document.getElementById("subCategoryCheck").style.display = 'none';
+						}
+					})
+					.error(function(data,status){
+						ApiService.exception(data,status);
+					});
+				}
+				
+			}
 			
 			
+			// sub category create function 
+			$scope.createSubCategory = function(){
+				console.log($scope.subCategory);
+				
+				var subCategory =	{
+						name:$scope.subCategory.name
+					}
+				
+				console.log("createSubCategory",subCategory);
+					ApiService.post('/admin/'+$scope.categoryId+'/addSubCategory',subCategory)
+					.success(function(data,status){
+								if(data =="Sub Category added Successfully"){
+									NotifyService.success("Sub Category added successfully");	
+									$scope.loadCategories();
+								}
+								else{
+									NotifyService.warning("Error adding Sub category!!","Please try again");
+								}
+								ngDialog.closeAll();
+							})
+					.error(function(data,status){
+						ApiService.exception(data,status);
+					});
+			}
+//			********************************************************* Load sub Categories Function *********************************************************
+			$rootScope.edit = true;
+			$rootScope.update = false;
+			
+			
+			$scope.editSubCatClick = function(){
+				$rootScope.edit = false;
+				$rootScope.update = true;
+			}
+			
+			$scope.updateSubCat = function(){
+				$rootScope.update = false;
+				$rootScope.edit = true;
+			}
+			$scope.cancelUpdate = function(){
+				console.log("Inside cancel update");
+				$rootScope.update = false;	
+				$rootScope.edit = true;
+			}
+			
+			$scope.subCat ="";
+			$scope.viewSubCategory = function(categoryId){
+				
+				$scope.categoryId = categoryId;
+				
+				ngDialog.open({ 
+					template: 'html/admin/subCategoriesListView.html',
+					scope:$scope
+					});
+				
+				
+			ApiService.call('/getSubCategories/'+categoryId)
+				.success(function(data,status){
+					console.log($.isEmptyObject(data));
+					if(data != null && !($.isEmptyObject(data))){
+						console.log("Get all sub categories",data)
+						$scope.subCat = true;
+						
+						$scope.subCategories = data;
+					}else{
+						console.log("Inside no cat found");
+						$scope.subCat = false;
+					}
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				});
+			}
+			
+//			********************************************************* Update sub Categories Function *********************************************************
+			$scope.updateSubCat = function(id){
+				console.log("Inside Update subCat",id);
+			}
+					
+//			********************************************************* Delete sub Categories Function *********************************************************
+			$scope.deleteCategory = function(id){
+				console.log("Inside DeletesubCat",id);
+			}
+			
+
 		})

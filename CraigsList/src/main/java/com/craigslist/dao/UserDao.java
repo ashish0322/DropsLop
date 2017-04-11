@@ -3,6 +3,7 @@
  */
 package com.craigslist.dao;
 
+import java.util.ArrayList;
 /**
  * @author ashish
  *
@@ -14,6 +15,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+
+import com.craigslist.model.Category;
 import com.craigslist.model.User;
 
 /**
@@ -101,11 +104,26 @@ public class UserDao {
   /**
    * Update the passed user in the database.
    */
-  public void update(User user) {
-    entityManager.merge(user);
-    return;
+  public User update(User user) {
+	  return entityManager.merge(user);
+   
   }
 
+  
+//get list of users
+
+	  public List<User> getUsersList(){
+		  
+		  List<User> usersList = new ArrayList<>();
+		  String query = "select u from User u";
+		  try{
+			  usersList = entityManager.createQuery(query).getResultList();
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return usersList;
+	  }
  
   
 }

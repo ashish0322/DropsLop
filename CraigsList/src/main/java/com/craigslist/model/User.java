@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * @author ashish
@@ -55,6 +57,7 @@ public class User {
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="userInfo_fk")
+	@JsonManagedReference
 	private UserInfo userInfo;
 	
 	// ------------------------

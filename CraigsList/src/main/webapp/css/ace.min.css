@@ -1,0 +1,84 @@
+.infobox-container {
+	margin-left: 60px;
+    text-align: center;
+    font-size: 0;
+}
+.infobox-green {
+    color: #9ABC32;
+    border-color: #9ABC32;
+    background-color:#9ABC32;
+}
+
+.infobox-blue {
+    color: #6FB3E0;
+    border-color: #6FB3E0;
+    background-color:#6FB3E0;
+}
+
+.infobox-pink {
+    color: #CB6FD7;
+    border-color: #CB6FD7;
+    background-color:#CB6FD7;
+}
+
+.infobox-red {
+    color: #D53F40;
+    border-color: #D53F40;
+    background-color:#D53F40;
+}
+
+.infobox-orange2 {
+    color: #F79263;
+    border-color: #F79263;
+    background-color:#F79263;
+}
+
+.infobox-blue2 {
+    color: #3983C2;
+    border-color: #3983C2;
+    background-color:#3983C2;
+}
+.infobox, .popover, .popover-title, .progress, .tooltip-inner {
+    border-radius: 0;
+}
+.infobox {
+    display: inline-block;
+    width: 250px;
+    height: 66px;
+    color: #555;
+    
+    box-shadow: none;
+    margin: -1px 0 0 -1px;
+    padding: 8px 3px 6px 9px;
+    border: 1px dotted;
+    border-color: #D8D8D8!important;
+    vertical-align: middle;
+    text-align: left;
+    position: relative;
+}
+
+.infobox>.infobox-data {
+    display: inline-block;
+    border-width: 0;
+    font-size: 13px;
+    text-align: left;
+    line-height: 21px;
+    min-width: 130px;
+    padding-left: 8px;
+    position: relative;
+    top: 0;
+}
+
+.infobox>.infobox-data>.infobox-data-number {
+    display: block;
+    font-size: 22px;
+    margin: 2px 0 4px;
+    position: relative;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.15);
+}
+
+.infobox .infobox-content {
+    color: #555;
+    max-width: 140px;
+}
+

@@ -19,6 +19,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * @author amaheedhara
  *
@@ -53,6 +57,7 @@ public class Product {
 	@Transient
     private MultipartFile photo; // Use by Data Binder
 		
+	
     @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinColumn(name="seller")
     private User user;
@@ -66,10 +71,12 @@ public class Product {
     
     @ManyToOne
     @JoinColumn(name="subCategoryId")
+    @JsonBackReference
     private SubCategory subCategory;
     
     @OneToMany(fetch=FetchType.EAGER,mappedBy="product",targetEntity=Comment.class,
 			cascade = CascadeType.ALL)
+    @JsonManagedReference
 	private Set<Comment> comments = new HashSet<Comment>();
 
     public Product(String productName, String company, User user,String categoryName,

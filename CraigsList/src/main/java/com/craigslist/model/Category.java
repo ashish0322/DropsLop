@@ -17,6 +17,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * @author amaheedhara
  *
@@ -37,8 +40,10 @@ public class Category {
 	@Column(name="description",unique = true, nullable = false)
 	private String description;
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="category",targetEntity=SubCategory.class,
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="category",targetEntity=SubCategory.class,
 			cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Set<SubCategory> subCategories = new HashSet<SubCategory>();
 
     public Category(String title,String description) {
