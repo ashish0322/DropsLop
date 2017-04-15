@@ -73,7 +73,7 @@
 	
 <!--  Google Api  -->
 	
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_a27DEJ1kN-XFpBAivZwUGyhdh3-2MhI&libraries=places&callback=initMap"
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXcM1dm2_XNniwAD-OeALfPj_ADot4etY&libraries=places"
         async defer></script>
 	<link rel="stylesheet"  type="text/css" href="css/googleMap.css">
 	
@@ -116,6 +116,9 @@
     .navbar-admin {
     background-color: #3071a9;
 	}
+	
+	div[id^=map_canvas], 
+	div[id^=map_canvas] div {overflow: auto;}
 	</style>
 	
 	<script type="text/javascript">
@@ -339,6 +342,7 @@
 	<script type="text/javascript" src="angularJs/dirPagination.js"></script>
 	<script type="text/javascript" src="angularJs/userController.js"></script>
 	<script type="text/javascript" src="angularJs/adService.js"></script>
+	<script type="text/javascript" src="angularJs/uploadService.js"></script>
 	
 	<!-- loading js files required by ui  -->
 	<script type="text/javascript" src="js/registration.js"></script>

@@ -9,7 +9,7 @@
 	<div class="container">
 		<div></div>
 		<div class="clearfix"></div>
-		<form name='myForm' ng-submit="msg='submitted'">
+		<form name='myForm' ng-submit="postAdvertisement()" novalidate>
 
 			<tabset>
 			<tab heading="Main" ng-click="main()" id="mainForm">
@@ -52,7 +52,15 @@
 					<div class="col-lg-12 form-group">
 						<label class="col-lg-2" for="Distributor">Year of Purchase</label>
 						<div class="col-lg-4">
-							<input type="number" ng-model="ad.purchasedYear"   placeholder=""
+							<input type="text" ng-model="ad.purchasedYear"   placeholder=""
+								class="form-control name" required="required">
+						</div>
+					</div>
+					
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2" for="Distributor">Price</label>
+						<div class="col-lg-4">
+							<input type="text" ng-model="ad.price"   placeholder=""
 								class="form-control name" required="required">
 						</div>
 					</div>
@@ -61,26 +69,14 @@
 			</tab> <tab heading="Images" ng-click="images()">
 			<div ng-form="subjectForm" ng-show="imagesForm">
 				<fieldset>
-					
 
-					<div class="col-lg-12 form-group  margin50">
-						<label class="col-sm-2" for="exampleInputFile">Image 1</label>
-						<div class="col-sm-4">
-							<input type="file" id="small">
+					<div class="col-lg-6 form-group margin50">
+						<div class="col-md-6">
+							<input type="file" fileinput="file" filepreview="filepreview" />
 						</div>
-					</div>
-
-					<div class="col-lg-12 form-group">
-						<label class="col-sm-2" for="exampleInputFile">Image 2</label>
-						<div class="col-sm-4">
-							<input type="file" id="medium">
-						</div>
-					</div>
-
-					<div class="col-lg-12 form-group">
-						<label class="col-sm-2" for="exampleInputFile">Image 3</label>
-						<div class="col-sm-4">
-							<input type="file" id="large">
+						<div class="col-md-6">
+							<img ng-src="{{filepreview}}" class="img-responsive"
+								ng-show="filepreview" />
 						</div>
 					</div>
 				</fieldset>
@@ -102,30 +98,62 @@
 			</tab>
 			
 			<tab heading="Location" ng-click="location()">
-			
-				<div ng-form="locationForm" ng-show="locationForm">
-			
-			 <div class="pac-card" id="pac-card">
-					<div class="col-lg-12 form-group margin50">
-						<label class="col-lg-2" for="Name">Address</label>
-						<div class="col-lg-4">
-							<input type="text" id="pac-input"   ng-model="userAd.streetAdress"
-								class="form-control name" ng-keyup="getAddress();">
-						</div>
-					</div>
+		<br/><br/>
+		<label class="col-lg-2" for="Manufacturer">Enter Your Address</label>
+			<div id="locationField">
+				<input id="autocomplete" placeholder="Enter your address"
+					type="text" style="width: 500px;" 	></input>
 			</div>
-				<div id="map"></div>
-					    <div id="infowindow-content">
-					      <img src="" width="16" height="16" id="place-icon">
-					      <span id="place-name"  class="title"></span><br>
-					      <span id="place-address"></span>
-					    </div>
+			<br/>
+			<label class="col-lg-2" for="Manufacturer" >Your Address is:</label><span>	{{ yourLocation }}</span>
+			
 				
-				<div class="Product_Button col-lg-offset-6">
-			         <input type="submit" value="Post Ad" class="btn btn-primary" ng-click="jumpToInvalidTab()"/>
-			        
-			    </div>
-			</div>
+			
+			
+		
+			<div ng-hide="hide">
+		<label class="col-lg-2" for="Manufacturer">Street address</label>		
+			<table id="address">
+				<tr>
+					<td class="label">Street address</td>
+					<td class="slimField"><input class="field" id="street_number"></input>
+					</td>
+					<td class="wideField" colspan="2"><input class="field"
+						id="route"></input></td>
+				</tr>
+				<tr>
+					<td class="label">City</td>
+					<td class="wideField" colspan="3"><input class="field"
+						id="locality"></input></td>
+				</tr>
+				<tr>
+					<td class="label">State</td>
+					<td class="slimField"><input class="field"
+						id="administrative_area_level_1"></input></td>
+					<td class="label">Zip code</td>
+					<td class="wideField"><input class="field" id="postal_code"></input>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Country</td>
+					<td class="wideField" colspan="3"><input class="field"
+						id="country"></input></td>
+				</tr>
+				<tr>
+					<td class="label">Lat</td>
+					<td class="slimField"><input type="text" class="field"
+						id="latitude"></input></td>
+					<td class="label">Long</td>
+					<td class="wideField"><input type="text" class="field"
+						id="longitude"></input></td>
+				</tr>
+			</table>
+	
+		
+
+		</div>
+			<br/><br/>
+			<input type="submit" value="Post Ad" class="btn btn-primary btn-lg" tabindex="7">
 			
 			</tab>
 		</tabset>
