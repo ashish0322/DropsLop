@@ -39,7 +39,7 @@
                     </tr> 
                   </thead>
                  	<tbody >
-                          <tr dir-paginate="user in users | filter: u | itemsPerPage: pageSize" current-page="currentPage" ng-hide="user.userInfo.role=='amin'">
+                          <tr dir-paginate="user in users | filter: u | itemsPerPage: pageSize" current-page="currentPage" ng-hide="user.userInfo.role=='admin'">
                             <td>
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" ng-model="user.active"  

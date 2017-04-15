@@ -4,8 +4,10 @@
 package com.craigslist.serviceImpl;
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.craigslist.dao.UserDao;
-import com.craigslist.model.Category;
 import com.craigslist.model.Session;
 import com.craigslist.model.User;
 import com.craigslist.model.UserInfo;
@@ -62,16 +63,21 @@ public class UserServciceImpl implements UserService{
 	  System.out.println("FirstName is"+user.getFirstName());
     try {
     	
-      String DATE_FORMAT_NOW = "yyyy-MM-dd";
-      Date date = new Date();
-      SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
-      String stringDate = sdf.format(date );
+    	// Create an instance of SimpleDateFormat used for formatting 
+		// the string representation of date (month/day/year)
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	
+		// Get the date today using Calendar object.
+		Date today = Calendar.getInstance().getTime();        
+		// Using DateFormat format method we can create a string 
+		// representation of a date with the defined format.
+		String stringDate = df.format(today);
 	  // encrypting password using secure hash algorithm
       String encryptedPass = PasswordEncrypt.getSHA1(user.getPassword());
-      String role = "admin";
+      String role = "user";
       User newUser = new User(user.getFirstName(), user.getLastName(), user.getDisplayName(), user.getEmail(), encryptedPass);
       UserInfo userInfo = new UserInfo();
-      userInfo.setRole("admin");
+      userInfo.setRole(role);
       userInfo.setRegisteredDate(stringDate);
       newUser.setUserInfo(userInfo);
       userDao.create(newUser);
@@ -92,18 +98,21 @@ public class UserServciceImpl implements UserService{
 		{
 		  System.out.println("FirstName is"+user.getEmail());
 		  User validUser = new User();
+		  User updatedValidUser;
 	  try {
+		  
 		  String encryptedPass = PasswordEncrypt.getSHA1(user.getPassword());
 		  validUser = userDao.getByEmailAndPassword(user.getEmail(),encryptedPass);
+		  updatedValidUser = updateLastLoginTime(validUser);
 		  Session userSession =  objectFactory.createSession();
-		  userSession.setUser(user);
+		  userSession.setUser(updatedValidUser);
 		  userSession.setAccessIpAddress(request.getRemoteAddr());
 		  request.getSession().setAttribute(REST_API_SESSION_KEY, userSession);
 	  }
 	  catch (Exception ex) {
 	    return null;
 	  }
-	  return validUser;
+	  return updatedValidUser;
 	}
   
   /**
@@ -227,7 +236,7 @@ public class UserServciceImpl implements UserService{
 		return user;
 	}
 	
-	//private methods
+	// methods
 
 	public static Session getCurrentSession(HttpServletRequest request) {
 
@@ -245,7 +254,25 @@ public class UserServciceImpl implements UserService{
 			return null;
 		}
 
-	
+	// 
+	public User updateLastLoginTime(User user){
+		
+		// Create an instance of SimpleDateFormat used for formatting 
+		// the string representation of date (month/day/year)
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+		// Get the date today using Calendar object.
+		Date today = Calendar.getInstance().getTime();        
+		// Using DateFormat format method we can create a string 
+		// representation of a date with the defined format.
+		String lastLoginDate = df.format(today);
+		
+		UserInfo userInfo = user.getUserInfo();
+		userInfo.setLastLoginDate(lastLoginDate);
+		user.setUserInfo(userInfo);
+		return userDao.update(user);
+		
+	}
 
 	
 

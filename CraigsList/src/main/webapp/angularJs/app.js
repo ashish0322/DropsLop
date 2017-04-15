@@ -7,6 +7,8 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 								'loginServivce',
 								'registrationService',
 								'adminService',
+								'userService',
+								'AdService',
 								'ui.bootstrap','UIService','DropslopWebSocket','angularUtils.directives.dirPagination']);
 
 	dropslop.config(function($routeProvider,$httpProvider){
@@ -34,8 +36,16 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/admin/manageUsers.html', 
 			      	controller: 'manageUsersController'
 			      	})
-			      	
-			      	
+			     .when('/user/userDashboard', {
+			      	access:'private', 
+			      	templateUrl: 'html/user/userView.html', 
+			      	controller: 'userController'
+			      	})
+			      .when('/user/postAd', {
+			      	access:'private', 
+			      	templateUrl: 'html/user/postAd.html', 
+			      	controller: 'adController'
+			      	})
 			    .otherwise({ redirectTo: '/error' })
 			    
 			    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -96,6 +106,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 	            }
 	        });
 			
+	     
 		/* Start wathching for idle */
 	 	$idle.watch();
 	 	$rootScope.$on('$idleStart', function() {
@@ -114,7 +125,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 		});
 		/* End watching for idle */
 		
-		
+	
 		
 	}
 	

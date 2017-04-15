@@ -41,7 +41,7 @@ angular.module("loginServivce",[])
 		
 	})
 
-	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope,AuthenticationService,userPersistenceService){
+	.controller("loginController",function($scope,$http,ApiService,ngDialog,$location,$localStorage,$rootScope,userPersistenceService){
 		
 	//	********************************************************* Login Function *********************************************************
 		$scope.login = function(user){
@@ -60,11 +60,12 @@ angular.module("loginServivce",[])
 					
 			ApiService.post("/login",user)
 			.success(function(data,status){
-					if(data.firstName != null){
+					if(data.firstName != null && data.active == true){
 //					AuthenticationService.SetCredentials($scope.user.email, $scope.user.password);
 					$scope.navBarClass  = "navbar navbar-inverse navbar-admin";
 					$rootScope.categories = false;
 					$rootScope.authenticated = false;
+					
 					$localStorage.useradmin="admin";
 					$localStorage.showdropdown="false";
 					
@@ -78,15 +79,30 @@ angular.module("loginServivce",[])
 					userPersistenceService.storeUserSession(data);
 					$rootScope.displayName = username;
 					$rootScope.email = data.email;
-					
+					$rootScope.lastLogin = data.userInfo.lastLoginDate;
 					
 						console.log("Inside get user login",data);
 						ngDialog.close();
-					
-						$location.path("/admin/adminDashboard");
+
 						document.getElementById("userCheck").style.display = 'none';
+						if(data.userInfo.role == 'admin'){
+						$rootScope.navBarClass = "navbar navbar-default";
+						$rootScope.navBarClass1 ="dropdown navbar-default";
+						$rootScope.footerNav = "navbar navbar-default";
+						$rootScope.onlyAdmin = false;
+						$location.path("/admin/adminDashboard");
+						}
+						else{
+							$rootScope.authenticated = false;
+							$rootScope.onlyAdmin = true;
+							$rootScope.onlyUser = false;
+							$location.path("/user/userDashboard");
+						}
 						
-						
+					}
+					else if(data.firstName != null && data.active == false){
+						$scope.userCheck = "Your account is disabled";
+						document.getElementById("userCheck").style.display = 'block';
 					}
 					else{
 						$scope.userCheck = "Invalid Login";

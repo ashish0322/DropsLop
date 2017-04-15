@@ -57,7 +57,7 @@ body {
 }
 
 .navbar-top-links>li>a {
-    color: #999;
+    color: #fff;
 }
 
 .navbar-top-links>li>a:hover, .navbar-top-links>li>a:focus, .navbar-top-links>.open>a, .navbar-top-links>.open>a:hover, .navbar-top-links>.open>a:focus {

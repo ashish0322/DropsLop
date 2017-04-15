@@ -1,0 +1,135 @@
+ <!-- Page Content -->
+    <div id="page-wrapper">
+    
+    <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{{msg}}</h1>
+                </div>
+            </div>
+	<div class="container">
+		<div></div>
+		<div class="clearfix"></div>
+		<form name='myForm' ng-submit="msg='submitted'">
+
+			<tabset>
+			<tab heading="Main" ng-click="main()" id="mainForm">
+			<div ng-form="mainForm" ng-show="mainForm" name="mainForm">
+				<fieldset>
+					<div class="col-lg-12 form-group margin50">
+						<label class="col-lg-2" for="Name">Title</label>
+						<div class="col-lg-4">
+							<input type="text" ng-model="ad.title"   placeholder="Iphone 6 with Box and Accessories"
+								class="form-control name" required="required">
+						</div>
+					</div>
+					
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2" for="Name">Product Name</label>
+						<div class="col-lg-4">
+							<input type="text" ng-model="ad.productName"   placeholder=""
+								class="form-control name" required="required">
+						</div>
+					</div>
+
+					<div class=" col-lg-12 form-group">
+						<label class="col-lg-2" for="ProductType">Product Category</label>
+						<div class="col-lg-4">
+							<select ng-model="ad.category" ng-options="cat.title for cat in categoriesList" name="ProductType"
+								class="form-control product-type">
+							</select>
+						</div>
+					</div>
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2" for="Manufacturer">Sub Category</label>
+						<div class="col-lg-4">
+							<select ng-model="ad.subCategory" name="Manufacturer"
+								class="form-control manufacturer" ng-diabled="">
+								<option ng-repeat="subCat in ad.category.subCategories" ng-value="subCat.name">{{subCat.name}}</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2" for="Distributor">Year of Purchase</label>
+						<div class="col-lg-4">
+							<input type="number" ng-model="ad.purchasedYear"   placeholder=""
+								class="form-control name" required="required">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			</tab> <tab heading="Images" ng-click="images()">
+			<div ng-form="subjectForm" ng-show="imagesForm">
+				<fieldset>
+					
+
+					<div class="col-lg-12 form-group  margin50">
+						<label class="col-sm-2" for="exampleInputFile">Image 1</label>
+						<div class="col-sm-4">
+							<input type="file" id="small">
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<label class="col-sm-2" for="exampleInputFile">Image 2</label>
+						<div class="col-sm-4">
+							<input type="file" id="medium">
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<label class="col-sm-2" for="exampleInputFile">Image 3</label>
+						<div class="col-sm-4">
+							<input type="file" id="large">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			</tab> 
+			
+			<tab heading="Description" ng-click="description()">
+			<div ng-form="descriptionForm" ng-show="descriptionForm">
+					<div class="col-lg-12 form-group margin50">
+						<label class="col-sm-2" for="Description">Description</label>
+						<div class="col-sm-4">
+							<textarea class="form-control description" id="description"
+								name="Description" rows="5" cols="15"></textarea>
+						</div>
+					</div>
+			</div>
+
+			</tab>
+			
+			<tab heading="Location" ng-click="location()">
+			
+				<div ng-form="locationForm" ng-show="locationForm">
+			
+			 <div class="pac-card" id="pac-card">
+					<div class="col-lg-12 form-group margin50">
+						<label class="col-lg-2" for="Name">Address</label>
+						<div class="col-lg-4">
+							<input type="text" id="pac-input"   ng-model="userAd.streetAdress"
+								class="form-control name" ng-keyup="getAddress();">
+						</div>
+					</div>
+			</div>
+				<div id="map"></div>
+					    <div id="infowindow-content">
+					      <img src="" width="16" height="16" id="place-icon">
+					      <span id="place-name"  class="title"></span><br>
+					      <span id="place-address"></span>
+					    </div>
+				
+				<div class="Product_Button col-lg-offset-6">
+			         <input type="submit" value="Post Ad" class="btn btn-primary" ng-click="jumpToInvalidTab()"/>
+			        
+			    </div>
+			</div>
+			
+			</tab>
+		</tabset>
+		</form>
+	</div>
+
+ </div>

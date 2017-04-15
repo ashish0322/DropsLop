@@ -3,7 +3,12 @@ angular.module("layoutService",[])
 	.controller("layoutController",function($scope,$http,ApiService,ngDialog,$rootScope,$localStorage,userPersistenceService){
 	
 		$rootScope.authenticated = false;
-		$scope.navBarClass  = "navbar navbar-inverse navbar-fixed-top";
+		$rootScope.onlyAdmin = false;
+		$rootScope.onlyUser = true;
+		
+		$rootScope.navBarClass  = "navbar navbar-inverse navbar-fixed-top";
+		$rootScope.navBarClass1 = "dropdown navbar-inverse";
+		$rootScope.footerNav = "navbar navbar-inverse";
 		
 		var username = "";
 		
@@ -14,6 +19,7 @@ angular.module("layoutService",[])
 
 		$rootScope.authenticated = true;
 		$rootScope.categories = true;
+		$rootScope.onlyAdmin = true;
 		
 		}
 		else{
@@ -26,6 +32,17 @@ angular.module("layoutService",[])
 			$rootScope.data = userData;
 			$rootScope.displayName = userData.displayName;
 			$rootScope.email = userData.email;
+			$rootScope.lastLogin = userData.userInfo.lastLoginDate;
+			if(userData.userInfo.role == "admin"){
+				$rootScope.navBarClass = "navbar navbar-default";
+				$rootScope.navBarClass1 ="dropdown navbar-default";
+				$rootScope.footerNav = "navbar navbar-default";
+			}
+			else{
+				$rootScope.authenticated = false;
+				$rootScope.onlyAdmin = true;
+				$rootScope.onlyUser = false;
+			}
 		}
 		
 		
@@ -74,6 +91,7 @@ angular.module("layoutService",[])
 			ApiService.call("/logout")
 				.success(function(data,status){
 					console.log("Logout Success");
+					
 					$location.path('/');
 					userPersistenceService.clearCookieData();
 
