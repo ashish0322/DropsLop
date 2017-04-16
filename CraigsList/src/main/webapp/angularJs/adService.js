@@ -1,16 +1,15 @@
 angular.module('AdService', ['ui.bootstrap'])
 
-	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService){
+	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService,NotifyService){
 		console.log("Inside adController");
 		
-		$scope.userAd = {};
+		$scope.ad= {};
 		var message = "Post your Ad here";
 		$scope.msg = message;
 		
 		$scope.main = function(){
 			console.log("Inside main tab");
 			$scope.mainForm= true;
-			
 			
 		}
 		
@@ -22,12 +21,16 @@ angular.module('AdService', ['ui.bootstrap'])
 			      if(angular.equals(newfile, oldfile) ){
 			        return;
 			      }
-
+			   $scope.ad.file = newfile;
+			   console.log("$scope.ad.file",$scope.ad.file);
+			  
 			      uploadService.upload(newfile).then(function(res){
 			        // DO SOMETHING WITH THE RESULT!
 			        console.log("result", res);
 			      })
 			    });
+			  
+			console.log("$scope.fileinput",$scope.fileinput);
 		}
 		
 		$scope.description = function(){
@@ -136,7 +139,52 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	
 		    	console.log("Inside submit of post ad");
 		    	
+		    	$scope.file;
+		    	console.log("$scope.file",$scope.file);
+		    	var formData = new FormData();  
+		    	formData.append('file',$scope.file);
+		    	console.log("formData",formData);
+		    	
 		    	var title = $scope.ad.title;
+		    	var productName = $scope.ad.productName;
+		    	var category = $scope.ad.category;
+		    	var subCategory = $scope.ad.subCategory;
+		    	var purchasedYear = $scope.ad.purchasedYear;
+		    	var price = $scope.ad.price;
+		    	var file = $scope.ad.file;
+		    	var description = $scope.ad.description;
+		    	var address = $rootScope.yourLocation;
+		    	var contact = $scope.ad.contact;
+		    	
+		    	var postAd = {
+		    			title : title,
+		    			productName :productName,
+		    			category :category,
+		    			subCategoryName:subCategory,
+		    			purchasedYear:purchasedYear,
+		    			price:price,
+		    			file : file,
+		    			description: description,
+		    			address: address,
+		    			contact:contact
+		    	}
+		    	
+		    	console.log("Filled post ad form details",postAd);
+		    	
+		    	ApiService.post('/user/'+$rootScope.email+'/postAd',postAd)
+				.success(function(data,status){
+							if(data!=""){
+								console.log("Inside post ad",data);
+								NotifyService.success("Your Ad has been sent for admin approval!!");
+							}
+							else{
+								NotifyService.warning("Error Message","Failed to submit Ad");
+							}
+						})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				});
+		    	
 		    }
 		    
 
@@ -145,37 +193,10 @@ angular.module('AdService', ['ui.bootstrap'])
 		    
 //			********************************************************* Upload Service *********************************************************
 	
+	
 			.service("uploadService", function($http, $q) {
 			
-			    return ({
-			      upload: upload
-			    });
-			
-			    function upload(file) {
-			      var upl = $http({
-			        method: 'POST',
-			        url: 'http://jsonplaceholder.typicode.com/posts', // /api/upload
-			        headers: {
-			          'Content-Type': 'multipart/form-data'
-			        },
-			        data: {
-			          upload: file
-			        },
-			        transformRequest: function(data, headersGetter) {
-			          var formData = new FormData();
-			          angular.forEach(data, function(value, key) {
-			            formData.append(key, value);
-			          });
-			
-			          var headers = headersGetter();
-			          delete headers['Content-Type'];
-			
-			          return formData;
-			        }
-			      });
-			      return upl.then(handleSuccess, handleError);
-		
-			    } // End upload function
+			  
 			    
 			 // ---
 			    // PRIVATE METHODS.
@@ -203,8 +224,13 @@ angular.module('AdService', ['ui.bootstrap'])
 			        filepreview: "="
 			      },
 			      link: function(scope, element, attributes) {
+			    	 
 			        element.bind("change", function(changeEvent) {
 			          scope.fileinput = changeEvent.target.files[0];
+			          var formData = new FormData();
+			          formData.append('file',scope.fileinput);
+			          console.log("formData",formData);
+			          console.log("scope.fileinput",scope.fileinput);
 			          var reader = new FileReader();
 			          reader.onload = function(loadEvent) {
 			            scope.$apply(function() {

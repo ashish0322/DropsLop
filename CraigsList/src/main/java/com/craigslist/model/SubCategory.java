@@ -38,12 +38,12 @@ public class SubCategory {
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="subCategory",targetEntity=Product.class,
 			cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonManagedReference(value="mappedToSubCat")
 	private Set<Product> products = new HashSet<Product>();
 	
 	@ManyToOne
     @JoinColumn(name="category")
-	@JsonBackReference
+	@JsonBackReference(value="mappedToCat")
     private Category category;
 	
 	public SubCategory(){

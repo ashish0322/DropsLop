@@ -5,6 +5,9 @@ package com.craigslist.model;
 
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -53,7 +57,11 @@ public class User {
 	@Column(name = "active")
 	private Boolean active = Boolean.TRUE;
 
-
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="user",targetEntity=Product.class,
+			cascade = CascadeType.ALL)
+	@JsonManagedReference(value="mappedToProduct")
+	private Set<Product> products = new HashSet<Product>();
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="userInfo_fk")
@@ -148,5 +156,20 @@ public class User {
 		this.active = active;
 	}
 
+
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public void addProduct(Product product) {
+        getProducts().add(product);
+    }
 	
 }

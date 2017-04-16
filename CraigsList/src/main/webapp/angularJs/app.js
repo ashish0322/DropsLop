@@ -36,15 +36,25 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/admin/manageUsers.html', 
 			      	controller: 'manageUsersController'
 			      	})
+			     .when('/admin/manageAds', {
+			      	access:'private', 
+			      	templateUrl: 'html/admin/manageAds.html', 
+			      	controller: 'manageAdsController'
+			      	})
 			     .when('/user/userDashboard', {
 			      	access:'private', 
-			      	templateUrl: 'html/user/userView.html', 
+			      	templateUrl: 'html/user/viewPostings.html', 
 			      	controller: 'userController'
 			      	})
 			      .when('/user/postAd', {
 			      	access:'private', 
 			      	templateUrl: 'html/user/postAd.html', 
 			      	controller: 'adController'
+			      	})
+			       .when('/user/viewPostings', {
+			      	access:'private', 
+			      	templateUrl: 'html/user/viewPostings.html', 
+			      	controller: 'userController'
 			      	})
 			    .otherwise({ redirectTo: '/error' })
 			    

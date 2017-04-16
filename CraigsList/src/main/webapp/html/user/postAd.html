@@ -72,7 +72,7 @@
 
 					<div class="col-lg-6 form-group margin50">
 						<div class="col-md-6">
-							<input type="file" fileinput="file" filepreview="filepreview" />
+							<input type="file" fileinput="file" filepreview="filepreview"/>
 						</div>
 						<div class="col-md-6">
 							<img ng-src="{{filepreview}}" class="img-responsive"
@@ -90,7 +90,7 @@
 						<label class="col-sm-2" for="Description">Description</label>
 						<div class="col-sm-4">
 							<textarea class="form-control description" id="description"
-								name="Description" rows="5" cols="15"></textarea>
+								ng-model="ad.description" rows="5" cols="15"></textarea>
 						</div>
 					</div>
 			</div>
@@ -105,7 +105,14 @@
 					type="text" style="width: 500px;" 	></input>
 			</div>
 			<br/>
+			<label class="col-lg-2" for="Manufacturer">Enter Your Contact</label>
+			<div id="locationField">
+				<input id="autocomplete" placeholder="Enter your contact" ng-model="ad.contact"
+					type="text" style="width: 300px;" 	></input>
+			</div>
+			<br/>
 			<label class="col-lg-2" for="Manufacturer" >Your Address is:</label><span>	{{ yourLocation }}</span>
+			<br/>
 			
 				
 			

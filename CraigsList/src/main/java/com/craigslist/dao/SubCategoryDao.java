@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.craigslist.model.SubCategory;
+import com.craigslist.model.User;
 
 /**
  * @author amaheedhara
@@ -62,11 +63,14 @@ public class SubCategoryDao {
 	   * Return the sub category having the passed name.
 	   */
 	  public SubCategory getByName(String name) {
-		  
-		  String query = "select c from SubCategory where c.name :name";
-	    return (SubCategory) entityManager.createQuery(query).getSingleResult();
+		  return (SubCategory) entityManager.createQuery(
+			        "from SubCategory where name = :name")
+			        .setParameter("name", name)
+			        .getSingleResult();
 	  }
 	  
+	  
+	
 	  
 	  /**
 	   * Update the passed sub Category in the database.

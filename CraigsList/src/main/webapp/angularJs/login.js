@@ -80,7 +80,7 @@ angular.module("loginServivce",[])
 					$rootScope.displayName = username;
 					$rootScope.email = data.email;
 					$rootScope.lastLogin = data.userInfo.lastLoginDate;
-					
+					$localStorage.user = data;
 						console.log("Inside get user login",data);
 						ngDialog.close();
 

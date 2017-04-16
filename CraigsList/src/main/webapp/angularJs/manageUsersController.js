@@ -5,10 +5,6 @@ angular.module("adminService")
 			var title = "Manage Users";
 			$scope.title = title;
 			
-//			$scope.currentPage = 1;
-//			$scope.numPerPage = 10;
-//			$scope.maxSize = 5;
-			
 			$scope.currentPage = 1;
 			$scope.pageSize = 5;
 			$scope.filteredUsers = [];

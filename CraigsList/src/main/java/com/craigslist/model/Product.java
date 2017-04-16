@@ -3,25 +3,18 @@
  */
 package com.craigslist.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author amaheedhara
@@ -37,62 +30,82 @@ public class Product {
 	@GeneratedValue
 	@Column(name="productId", unique = true, nullable = false)
     private long productId;
+	
+	@Column(nullable = false)
+	private String title;
+	
 	@Column(nullable = false)
 	private String productName;
-	@Column(nullable = false)
-    private String company;
+	
 	@Column(nullable = false)
 	private double price;
+	
 	@Column(nullable = false)
 	private String description;
-	@Column(nullable = false)
+	
+
 	private int rating;
 	
-	@Column(nullable = false)
 	private long views;
 	
-	@Column(nullable = false)
+	private String purchasedYear;
+	
+	private String address;
+	
 	private String photoName; // Map with hibernate
+	
+	private String postedDate;
+	
+	private String approvalStatus;
 	
 	@Transient
     private MultipartFile photo; // Use by Data Binder
-		
-	
-    @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinColumn(name="seller")
-    private User user;
 
-
+    @Transient
+    private Category category;
+    
 	@Column(nullable = false)
     private String sellerName;
     
+	@ManyToOne
+    @JoinColumn(name="user")
+	@JsonBackReference(value="mappedToProduct")
+    private User user;
+	
+	
+	private String sellerEmail;
+	private String contact;
+	
+    private String categoryName;
+    
     @Column(nullable = false)
-    private String category_name;
+    private String subCategoryName;
     
     @ManyToOne
     @JoinColumn(name="subCategoryId")
-    @JsonBackReference
+    @JsonBackReference(value="mappedToSubCat")
     private SubCategory subCategory;
     
-    @OneToMany(fetch=FetchType.EAGER,mappedBy="product",targetEntity=Comment.class,
-			cascade = CascadeType.ALL)
-    @JsonManagedReference
-	private Set<Comment> comments = new HashSet<Comment>();
 
-    public Product(String productName, String company, User user,String categoryName,
-    		double price,String description,int rating,String photoName,SubCategory subCategory,
-    		String sellerName) {
+    public Product(String title, String purchasedYear, String address,String productName,String categoryName,
+    		double price,String description,String photoName,String subCategoryName,String sellerEmail,
+    		String sellerName,User user,SubCategory subCategory,String approvalStatus,String postedDate,String contact) {
         this.productName = productName;
-        this.company = company;
-        this.user = user;
         this.sellerName = sellerName;
-        this.category_name=categoryName;
+        this.categoryName=categoryName;
         this.price = price;
         this.description = description;
-        this.rating= rating;
         this.photoName= photoName;
+        this.subCategoryName = subCategoryName;
+        this.title = title;
+        this.purchasedYear = purchasedYear;
+        this.address = address;
+        this.sellerEmail = sellerEmail;
+        this.user = user;
         this.subCategory = subCategory;
-        this.comments = new HashSet<Comment>();
+        this.approvalStatus = approvalStatus;
+        this.postedDate = postedDate;
+        this.contact = contact;
     }
 
     public Product() {
@@ -114,14 +127,6 @@ public class Product {
 		this.productName = productName;
 	}
 
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -139,6 +144,14 @@ public class Product {
 	}
 
 	
+
+	public String getSellerEmail() {
+		return sellerEmail;
+	}
+
+	public void setSellerEmail(String sellerEmail) {
+		this.sellerEmail = sellerEmail;
+	}
 
 	public int getRating() {
 		return rating;
@@ -164,14 +177,24 @@ public class Product {
 		this.photo = photo;
 	}
 
-	public String getCategory_name() {
-		return category_name;
+	
+
+
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	public SubCategory getSubCategory() {
 		return subCategory;
@@ -182,14 +205,6 @@ public class Product {
 	}
 
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public String getSellerName() {
 		return sellerName;
 	}
@@ -198,18 +213,6 @@ public class Product {
 		this.sellerName = sellerName;
 	}
 
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public void addComment(Comment comment) {
-        getComments().add(comment);
-    }
-	
 	
 	public long getViews() {
 			return views;
@@ -218,4 +221,71 @@ public class Product {
 	public void setViews(long views) {
 		this.views = views;
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getPurchasedYear() {
+		return purchasedYear;
+	}
+
+	public void setPurchasedYear(String purchasedYear) {
+		this.purchasedYear = purchasedYear;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostedDate() {
+		return postedDate;
+	}
+
+	public void setPostedDate(String postedDate) {
+		this.postedDate = postedDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
+	}
+
+	public String getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	
+	
+	
 }

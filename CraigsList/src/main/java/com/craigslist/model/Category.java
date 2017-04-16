@@ -43,7 +43,7 @@ public class Category {
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="category",targetEntity=SubCategory.class,
 			cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonManagedReference(value="mappedToCat")
 	private Set<SubCategory> subCategories = new HashSet<SubCategory>();
 
     public Category(String title,String description) {

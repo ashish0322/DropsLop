@@ -53,6 +53,7 @@ public class UserInfo {
 		private User user;
 		
 		
+		
 		public UserInfo(){
 			
 		}
