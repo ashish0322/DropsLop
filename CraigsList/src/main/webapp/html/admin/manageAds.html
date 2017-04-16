@@ -1,0 +1,82 @@
+<!-- Page Content -->
+    <div id="page-wrapper">
+        
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{{title}}</h1>
+                </div>
+            </div>
+
+<div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-4">
+                    <h3 class="panel-title">Ads Table</h3>
+                  </div>
+                  <div class="col-xs-2 col-lg-2">
+		              <label for="search">Search:</label>
+		              <input ng-model="u" id="search" class="form-control" placeholder="Filter text">
+		             
+		            </div>
+		            <div class="col-xs-2 col-lg-2">
+		              <label for="search">items per page:</label>
+             		  <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+		            </div>
+		            <div class="col-xs-2 col-lg-2">
+		            
+		             <label class="custom-control custom-checkbox" ng-repeat="stat in status">
+                                    <input type="checkbox" class="custom-control-input" ng-model="adStatus[$index]">
+                                    <span class="custom-control-indicator"></span>
+                                   {{stat}}
+                                </label>
+		            </div>
+                </div>
+              </div>
+              <div class="panel-body">
+               <table class="table table-striped table-bordered table-list">
+                  <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Submitted By</th>
+                        <th>Submitted on</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th><em class="fa fa-cog"></em></th>
+                    </tr> 
+                  </thead>
+                 	<tbody >
+                          <tr dir-paginate="ad in ads | filter: u | itemsPerPage: pageSize | filter: filterStats()" current-page="currentPage">
+
+                            <td>{{ad.title}}</td>
+                            <td>{{ad.categoryName}}</td>
+                            <td>{{ad.sellerEmail}}</td>
+                            <td>{{ad.postedDate}}</td>
+                            <td>{{ad.price}}</td>
+                            <td>{{ad.approvalStatus}}</td>
+                             <td>
+                               <button ng-hide="ad.approvalStatus=='approved' || ad.approvalStatus=='expired'" class='btn btn-info btn-xs' ng-click="changeStatus(ad.approvalStatus,ad.productId);"><span class="glyphicon glyphicon-edit"></span> Approve</button> 
+                				<button ng-hide="ad.approvalStatus=='expired'" ng-click="deleteAd(ad.productId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button>
+                            </td>
+                          </tr>
+                    </tbody>
+                </table>
+            
+              </div>
+              <div class="panel-footer">
+                <div class="row">
+                  <div class="col col-xs-4">Current Page {{currentPage}}
+                  </div>
+                  <div class="col col-xs-8">
+                   <div ng-controller="OtherController" class="other-controller">
+			          <div class="text-center">
+			          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="html/admin/dirPagination.tpl.html"></dir-pagination-controls>
+			          </div>
+			        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+</div>
