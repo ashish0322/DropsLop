@@ -72,7 +72,7 @@
 
 					<div class="col-lg-6 form-group margin50">
 						<div class="col-md-6">
-							<input type="file" fileinput="file" filepreview="filepreview"/>
+							<input type="file" onchange="angular.element(this).scope().iconUpload(event)"  fileinput="file" filepreview="filepreview" />
 						</div>
 						<div class="col-md-6">
 							<img ng-src="{{filepreview}}" class="img-responsive"

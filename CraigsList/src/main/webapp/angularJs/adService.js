@@ -33,6 +33,14 @@ angular.module('AdService', ['ui.bootstrap'])
 			console.log("$scope.fileinput",$scope.fileinput);
 		}
 		
+		$scope.iconUpload = function(event) {
+			$scope.imageFile= event.target.files[0]; //FileList object
+			console.log($scope.imageFile);
+
+			
+		
+		};
+		
 		$scope.description = function(){
 			console.log("Inside description tab");
 			$scope.descriptionForm= true;
@@ -142,7 +150,9 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	$scope.file;
 		    	console.log("$scope.file",$scope.file);
 		    	var formData = new FormData();  
-		    	formData.append('file',$scope.file);
+		    	formData.append('file',$scope.imageFile);
+		    	
+		    	var image = '?image='+formData;
 		    	console.log("formData",formData);
 		    	
 		    	var title = $scope.ad.title;
@@ -151,27 +161,32 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	var subCategory = $scope.ad.subCategory;
 		    	var purchasedYear = $scope.ad.purchasedYear;
 		    	var price = $scope.ad.price;
-		    	var file = $scope.ad.file;
+		    	var file = $scope.imageFile;
 		    	var description = $scope.ad.description;
 		    	var address = $rootScope.yourLocation;
 		    	var contact = $scope.ad.contact;
 		    	
 		    	var postAd = {
-		    			title : title,
-		    			productName :productName,
-		    			category :category,
-		    			subCategoryName:subCategory,
-		    			purchasedYear:purchasedYear,
-		    			price:price,
-		    			file : file,
-		    			description: description,
-		    			address: address,
-		    			contact:contact
+		    			"title" : title,
+		    			"productName" :productName,
+		    			"category" :category,
+		    			"subCategoryName":subCategory,
+		    			"purchasedYear":purchasedYear,
+		    			"price":price,
+		    			"description": description,
+		    			"address": address,
+		    			"contact":contact
 		    	}
-		    	
+		    	formData.append('ad',angular.toJson(postAd,true));
 		    	console.log("Filled post ad form details",postAd);
+		    	var uploadUrl = 'http://localhost:8030/dropslop/api/user/'+$rootScope.email+'/postAd';
+		    	$http.post(uploadUrl, formData,{
+		            transformRequest: angular.identity,
+		            headers: {'Content-Type': undefined}
+		    		
+		        })
 		    	
-		    	ApiService.post('/user/'+$rootScope.email+'/postAd',postAd)
+//		    	ApiService.post('/user/'+$rootScope.email+'/postAd'+image,postAd)
 				.success(function(data,status){
 							if(data!=""){
 								console.log("Inside post ad",data);
@@ -227,10 +242,7 @@ angular.module('AdService', ['ui.bootstrap'])
 			    	 
 			        element.bind("change", function(changeEvent) {
 			          scope.fileinput = changeEvent.target.files[0];
-			          var formData = new FormData();
-			          formData.append('file',scope.fileinput);
-			          console.log("formData",formData);
-			          console.log("scope.fileinput",scope.fileinput);
+			        
 			          var reader = new FileReader();
 			          reader.onload = function(loadEvent) {
 			            scope.$apply(function() {

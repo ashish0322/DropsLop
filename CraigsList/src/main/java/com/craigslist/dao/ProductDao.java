@@ -72,7 +72,58 @@ public class ProductDao {
 		  return productsList;
 		  
 	  }
+	  
+	  /**
+	   * Return the pending ads count
+	   */
+	  
+	  public long getPendingAdCount(){
+		  String approvalStatus = "Pending";
+		  String query = "from Product where approvalStatus = :approvalStatus";
+		  long pendingCount = 0;
+		  List<Product> productsList = new ArrayList<>();
+		  
+		  try{
+			  productsList = entityManager
+					  			.createQuery(query)
+					  			.setParameter("approvalStatus", approvalStatus)
+					  			.getResultList();
+			  if(productsList != null){
+				  return pendingCount = productsList.size();
+			  }
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return pendingCount;
+	  }
+	  
+	  
+	  /**
+	   * Return the Approved ads List
+	   */
 
+	  
+	  public List<Product> getApprovedProductsList(){
+		  String approvalStatus = "approved";
+		  String query = "from Product where approvalStatus = :approvalStatus";
+		  
+		  List<Product> productsList = new ArrayList<>();
+		  
+		  try{
+			  productsList = entityManager
+					  			.createQuery(query)
+					  			.setParameter("approvalStatus", approvalStatus)
+					  			.getResultList();
+			  if(productsList != null){
+				  return productsList;
+			  }
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return productsList;
+	  }
 	  /**
 	   * Return the product having the passed id.
 	   */

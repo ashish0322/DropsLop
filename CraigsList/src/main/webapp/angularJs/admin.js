@@ -5,5 +5,66 @@ angular.module("adminService",[])
 		var message = "Welcome Admin";
 		$scope.msg = message;
 		
+		
+		
+//		********************************************************* Get Number of users Function *********************************************************
+		
+		
+		$scope.loadNumberOfUsers = function($rootScope,$localStorage){
+		
+		ApiService.call("/admin/getUserCount")
+			.success(function(data,status){
+				if(data !=null){
+					console.log("Get users count",data)
+					$scope.totalUsers = data;
+				}
+			})
+			.error(function(data,status){
+				ApiService.exception(data,status);
+			});
+		}
+		
+		
+//		********************************************************* Get Pending Ads Function *********************************************************
+		
+		$scope.loadNumberOfPendingAds = function($rootScope,$localStorage){
+			
+			ApiService.call("/admin/getPendingAdsCount")
+				.success(function(data,status){
+					if(data !=null){
+						console.log("Get PendingAds count",data)
+						$scope.pendingAds = data;
+					}
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				});
+			}
+		
+		
+		
+//		********************************************************* Get Page Views Function *********************************************************
+
+
+//		********************************************************* Get Number of blocked users Function *********************************************************
+		
+		
+		$scope.loadNumberOfBlockedUsers = function($rootScope,$localStorage){
+		
+		ApiService.call("/admin/getBlockedUserCount")
+			.success(function(data,status){
+				if(data !=null){
+					console.log("Get blocked users count",data)
+					$scope.blockedUsers = data;
+				}
+			})
+			.error(function(data,status){
+				ApiService.exception(data,status);
+			});
+		}		
+		
+		$scope.loadNumberOfBlockedUsers();
+		$scope.loadNumberOfPendingAds();
+		$scope.loadNumberOfUsers();
 	})
 	

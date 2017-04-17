@@ -59,6 +59,13 @@ angular.module('services', [])
 				return $http({method: 'POST',  url: request, 
 					headers: {'Content-Type': 'application/json'}, data: message, withCredentials:true });
 			},
+			postWithImage: function(resource, message){
+				var request = this.url+this.app+resource;
+			//	logger = $log.getInstance('ApiService');
+			//	logger.debug('POST ' + request + ' Data ' + angular.toJson(message));
+				return $http({method: 'POST',  url: request, 
+					headers: {'Content-Type': undefined}, data: message, withCredentials:true });
+			},
 			put: function(resource, message){
 				var request = this.url+this.app+resource;
 			//	logger = $log.getInstance('ApiService');

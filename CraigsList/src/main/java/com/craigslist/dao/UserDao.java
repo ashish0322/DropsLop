@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.craigslist.model.Category;
+import com.craigslist.model.Product;
 import com.craigslist.model.User;
 
 /**
@@ -73,6 +74,42 @@ public class UserDao {
     return entityManager.createQuery("from User").getResultList();
   }
   
+  
+  /**
+   * Return user count
+   */
+  
+  public long getUsersCount() {
+	  
+	  	long userCount = 0;
+	  	List<User> userList = new ArrayList<>();
+	  	
+	  	
+	  	userList = entityManager.createQuery("from User").getResultList();
+	  	if(userList != null){
+	  		return userList.size();
+	  	}
+	    return userCount;
+	  }
+  
+  /**
+   * Return blocked user count
+   */
+  
+  public long getBlockedUsersCount() {
+	  
+	  	long userCount = 0;
+	  	List<User> userList = new ArrayList<>();
+	  	boolean active = false;
+	  	
+	  	userList = entityManager.createQuery("from User where active = :active")
+	  			.setParameter("active", active)
+	  			.getResultList();
+	  	if(userList != null){
+	  		return userList.size();
+	  	}
+	    return userCount;
+	  }
   /**
    * Return the user having the passed email.
    */

@@ -29,4 +29,7 @@ public interface UserService {
 	public List<User> getUsers();
 	
 	public User lockUnlockUser(String action,long id);
+	
+	public long getUsersCount();
+	public long getBlockedUsersCount();
 }

@@ -236,6 +236,28 @@ public class UserServciceImpl implements UserService{
 		return user;
 	}
 	
+	
+	@Override
+	@RequestMapping(value = "/api/admin/getUserCount", method = RequestMethod.GET)
+	public long getUsersCount() {
+		
+		long usersCount = 0;
+		
+		usersCount = userDao.getUsersCount();
+		
+		return usersCount;
+	}
+	
+	@Override
+	@RequestMapping(value = "/api/admin/getBlockedUserCount", method = RequestMethod.GET)
+	public long getBlockedUsersCount() {
+		
+		long blockedUsersCount = 0;
+		
+		blockedUsersCount = userDao.getBlockedUsersCount();
+		
+		return blockedUsersCount;
+	}
 	// methods
 
 	public static Session getCurrentSession(HttpServletRequest request) {
@@ -273,6 +295,8 @@ public class UserServciceImpl implements UserService{
 		return userDao.update(user);
 		
 	}
+
+	
 
 	
 

@@ -84,6 +84,46 @@ angular.module("layoutService",[])
 		
 		$scope.loadCategoriesList();
 		
+		
+//		********************************************************* Load Ads Function *********************************************************
+		
+		$scope.loadAds = function($rootScope,$localStorage){	
+		ApiService.call("/getApprovedAds")
+			.success(function(data,status){
+				if(data !=null){
+					console.log("Get top 4 ads",data);
+					$scope.products = data;
+					
+				}else{
+					
+				}
+			})
+			.error(function(data,status){
+				ApiService.exception(data,status);
+			});
+		
+		}
+		
+		$scope.loadAdss = function($rootScope,$localStorage){	
+			ApiService.call("/getApprovedAds")
+				.success(function(data,status){
+					if(data !=null){
+						console.log("Get next top 4 ads",data);
+						$scope.products1 = data;
+						
+					}else{
+						
+					}
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				});
+			
+			}
+		
+		$scope.loadAds();
+		$scope.loadAdss();
+		
 		})
 
 	.controller("logoutController",function(ApiService,$location,$rootScope,userPersistenceService){
