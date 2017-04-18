@@ -45,4 +45,10 @@ public class ClientRepositoryImpl extends ClientRepository {
 		return new LinkedList<>(this.clients);
 	}
 
+	@Override
+	public List<Client> getAllById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

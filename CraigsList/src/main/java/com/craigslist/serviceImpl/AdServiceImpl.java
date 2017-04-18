@@ -56,6 +56,9 @@ public class AdServiceImpl implements AdService{
 	  @Autowired
 	  private SubCategoryDao subCategoryDao;
 
+	  
+//		********************************************************* API to post AD  *********************************************************
+
 	@Override
 	@RequestMapping(value="/api/user/{userName}/postAd",method = RequestMethod.POST)
 	public String submitAd(@RequestParam(value="ad") String productt, 
@@ -96,7 +99,7 @@ public class AdServiceImpl implements AdService{
 	        String check = File.separator; //Checking if system is linux based or windows based by checking seprator used.
 	        String path = null;
 	        if (check.equalsIgnoreCase("\\")) {
-	            path = request.getSession().getServletContext().getRealPath("").replace("build\\", ""); //Netbeans projects gives real path as Lab6/build/web/ so we need to replace build in the path.
+	            path = request.getSession().getServletContext().getRealPath("").replace("build\\", ""); 
 	            System.out.println(request.getSession().getServletContext().getRealPath(""));
 	            
 	            path += "\\uploads\\";
@@ -145,10 +148,25 @@ public class AdServiceImpl implements AdService{
 			
 			String sellerName = user.getFirstName();
 			String approvalStatus = "Pending";
-			Product newAd = new Product(product.getTitle(), product.getPurchasedYear(), product.getAddress(), 
-					product.getProductName(), categoryName, product.getPrice(), product.getDescription(), photoName, 
-					product.getSubCategoryName(),user.getEmail() ,sellerName,user,subCategory,approvalStatus,stringDate,product.getContact());
+			Product newAd = new Product(product.getTitle(), 
+										product.getPurchasedYear(), 
+										product.getAddress(), 
+										product.getProductName(), 
+										categoryName, 
+										product.getPrice(), 
+										product.getDescription(), 
+										photoName, 
+										product.getSubCategoryName(),
+										user.getEmail() ,
+										sellerName,user,
+										subCategory,
+										approvalStatus,
+										stringDate,
+										product.getContact(),
+										product.getLatitude(),
+										product.getLongitude());
 		
+			newAd.setSpam(0);
 			productDao.create(newAd);
 			user.addProduct(newAd);
 			subCategory.addProduct(product);
@@ -162,6 +180,8 @@ public class AdServiceImpl implements AdService{
 	    }
 	    return JSONObject.quote("Ad Submitted Successfully");
 	}
+
+//	********************************************************* Get all ads by ADMIN API *********************************************************
 
 	@Override
 	@RequestMapping(value = "/api/admin/getAds", method = RequestMethod.GET)
@@ -177,6 +197,7 @@ public class AdServiceImpl implements AdService{
 					return null;
 				}
 	}
+//	********************************************************* Approve user posted AD API (ADMIN private) *********************************************************
 
 	@Override
 	@RequestMapping(value = "/api/admin/{action}/approveAdd/{id}", method = RequestMethod.GET)
@@ -199,6 +220,7 @@ public class AdServiceImpl implements AdService{
 		 
 		return product;
 	}
+//	********************************************************* Get Product by Id API (ADMIN private) *********************************************************
 
 	@Override
 	@RequestMapping(value = "/api/admin/{id}/getAd", method = RequestMethod.GET)
@@ -217,6 +239,8 @@ public class AdServiceImpl implements AdService{
 		return product;
 	}
 
+//	********************************************************* Delete Ad API (ADMIN) *********************************************************
+
 	@Override
 	@RequestMapping(value = "/api/admin/{id}/deleteAd", method = RequestMethod.GET)
 	public String removeAd(@PathVariable long id) {
@@ -233,7 +257,9 @@ public class AdServiceImpl implements AdService{
 		
 		return JSONObject.quote("Ad removed Successfully");
 	}
-	
+
+//	********************************************************* Get Product by Id API (USER private) *********************************************************
+
 	@Override
 	@RequestMapping(value = "/api/user/{id}/getAd", method = RequestMethod.GET)
 	public Product getAdByUser(@PathVariable long id) {
@@ -250,7 +276,9 @@ public class AdServiceImpl implements AdService{
 		 
 		return product;
 	}
+//	********************************************************* Delete Ad API (USER) *********************************************************
 
+	
 	@Override
 	@RequestMapping(value = "/api/user/{id}/deleteAd", method = RequestMethod.GET)
 	public String removeAdByUser(@PathVariable long id) {
@@ -268,6 +296,7 @@ public class AdServiceImpl implements AdService{
 		return JSONObject.quote("Ad removed Successfully");
 	}
 	
+//	*********************************************************Get Ads posted by particular user API *********************************************************
 	
 
 	@Override
@@ -286,6 +315,7 @@ public class AdServiceImpl implements AdService{
 				}
 		
 	}
+//	********************************************************* Get Pending ads count API *********************************************************
 
 	@Override
 	@RequestMapping(value = "/api/admin/getPendingAdsCount", method = RequestMethod.GET)
@@ -296,6 +326,8 @@ public class AdServiceImpl implements AdService{
 		
 		return pendingCount;
 	}
+
+//	********************************************************* Get Approved Ads API  *********************************************************
 
 	@Override
 	@RequestMapping(value = "/api/getApprovedAds", method = RequestMethod.GET)
@@ -317,6 +349,7 @@ public class AdServiceImpl implements AdService{
 	 * Api update Ad
 	 *
 	*/
+//	********************************************************* Update posted Ad API *********************************************************
 
 
 	@Override
@@ -343,6 +376,24 @@ public class AdServiceImpl implements AdService{
 	    }
 	    return JSONObject.quote("Ad updated Successfully");
 		
+	}
+
+//	********************************************************* Get Product by Id API (public) *********************************************************
+
+	
+	@Override
+	@RequestMapping(value = "/api/getSelectedProduct/{productId}", method = RequestMethod.GET)
+	public Product getSelectedProduct(@PathVariable long productId) {
+		
+		Product product = null;
+		try{
+			product = productDao.getById(productId);
+		}
+		catch(Exception e){
+			return product;
+		}
+		
+		return product;
 	}
 
 }

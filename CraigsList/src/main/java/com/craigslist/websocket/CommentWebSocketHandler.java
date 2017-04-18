@@ -21,9 +21,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  *
  */
 @Component
-public class TaskWebSocketHandler extends TextWebSocketHandler{
+public class CommentWebSocketHandler extends TextWebSocketHandler{
 	
-	private static Logger _logger = Logger.getLogger(TaskWebSocketHandler.class);
+	private static Logger _logger = Logger.getLogger(CommentWebSocketHandler.class);
 	
 	@Autowired 
 	private ClientRepository clientRepository;
@@ -31,7 +31,7 @@ public class TaskWebSocketHandler extends TextWebSocketHandler{
 	@OnOpen
 	public void onOpen(Session session) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(" TaskWebSocketHandler &&&&&&&&&&&&&&&7  On Open Session **********************");
+		System.out.println(" CommentWebSocketHandler &&&&&&&&&&&&&&&7  On Open Session **********************");
 		
 	}
 
@@ -62,7 +62,7 @@ public class TaskWebSocketHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(" TaskWebSocketHandler &&&&&&&&&&&&&&&7  After Connection closed **********************");
+		System.out.println(" CommentWebSocketHandler &&&&&&&&&&&&&&&7  After Connection closed **********************");
 		
 		_logger.info("Closed %s "+session.getId());
 		try {
@@ -76,7 +76,7 @@ public class TaskWebSocketHandler extends TextWebSocketHandler{
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(" TaskWebSocketHandler &&&&&&&&&&&&&&&7  After connection Established **********************");
+		System.out.println(" CommentWebSocketHandler &&&&&&&&&&&&&&&7  After connection Established **********************");
 		System.out.println("Connected "+session.getId());
 		try {
 			this.clientRepository.add(new Client(session));

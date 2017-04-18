@@ -1,10 +1,12 @@
 angular.module("layoutService",[])
 
-	.controller("layoutController",function($scope,$http,ApiService,ngDialog,$rootScope,$localStorage,userPersistenceService){
+	.controller("layoutController",function($scope,$http,ApiService,ngDialog,$rootScope,$localStorage,userPersistenceService,$location){
 	
 		$rootScope.authenticated = false;
 		$rootScope.onlyAdmin = false;
 		$rootScope.onlyUser = true;
+		
+		$scope.selectedProduct = {};
 		
 		$rootScope.navBarClass  = "navbar navbar-inverse navbar-fixed-top";
 		$rootScope.navBarClass1 = "dropdown navbar-inverse";
@@ -139,6 +141,28 @@ angular.module("layoutService",[])
 				.error(function(data,status){
 					ApiService.exception(data,status);
 				})
+		})
+		
+	.controller("productViewController",function(ApiService,$location,$rootScope,userPersistenceService,$scope, $routeParams){
+			console.log(" productViewController>>>");
+			$scope.selectedProduct = $routeParams.productId;
+			console.log("$scope.selectedProduct",$scope.selectedProduct);
+//			********************************************************* Load selected ad Function *********************************************************
+						
+			ApiService.call('/getSelectedProduct/'+$scope.selectedProduct)
+			.success(function(data,status){
+				if(data !=null){
+					console.log("Get Selected product",data);
+					$scope.selectedProduct = data;
+					console.log("$scope.selectedProduct ",$scope.selectedProduct );
+				}else{
+					
+				}
+			})
+			.error(function(data,status){
+				ApiService.exception(data,status);
+			});
+			
 		})
 		
 		

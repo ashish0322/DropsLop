@@ -18,7 +18,7 @@ import com.google.gson.Gson;
  *
  */
 @Component
-public class TaskBroadcaster implements Broadcaster<Task>{
+public class CommentBroadcaster implements Broadcaster<Comment>{
 	
 	@Autowired
 	private ClientRepository clients;
@@ -30,12 +30,12 @@ public class TaskBroadcaster implements Broadcaster<Task>{
 	}
 	
 	@Override
-	public void broadcast(List<Task> task) {
+	public void broadcast(List<Comment> task) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Inside broadcast method of TaskBroadcaster");
+		System.out.println("Inside broadcast method of CommentBroadcaster");
 		
-		System.out.println("broadcast method is called on TaskBroadcaster from TaskRepository Observer with taskrepo as input");
+		System.out.println("broadcast method is called on CommentBroadcaster from CommentRepository Observer with taskrepo as input");
 		this.clients.forEach(client -> {
 			try{
 				client.sendText(this.gson.toJson(task));

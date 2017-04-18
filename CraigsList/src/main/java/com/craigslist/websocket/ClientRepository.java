@@ -8,6 +8,6 @@ package com.craigslist.websocket;
  *
  */
 
-public abstract class ClientRepository extends TaskAppRespository<String, Client> {
+public abstract class ClientRepository extends CommentAppRespository<String, Client> {
 	
 }

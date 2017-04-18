@@ -41,4 +41,6 @@ public interface AdService {
 	
 	public String updateAd(Product product, long productId);
 	
+	public Product getSelectedProduct(long id);
+	
 }

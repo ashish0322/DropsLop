@@ -9,6 +9,7 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 								'adminService',
 								'userService',
 								'AdService',
+								'ngMaterial',
 								'ui.bootstrap','UIService','DropslopWebSocket','angularUtils.directives.dirPagination']);
 
 	dropslop.config(function($routeProvider,$httpProvider){
@@ -56,10 +57,10 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/user/viewPostings.html', 
 			      	controller: 'userController'
 			      	})
-			      	.when('/productDetailView', {
+			      	.when('/productDetailView/:productId', {
 			      	access:'public', 
 			      	templateUrl: 'html/productDetailView.html', 
-			      	controller: 'layoutController'
+			      	controller: 'productViewController'
 			      	})
 			    .otherwise({ redirectTo: '/error' })
 			    

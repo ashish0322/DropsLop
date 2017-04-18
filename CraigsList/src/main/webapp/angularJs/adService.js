@@ -91,6 +91,7 @@ angular.module('AdService', ['ui.bootstrap'])
 		        // populate the address fields in the form.
 		        google.maps.event.addListener(autocomplete, 'place_changed', function () {
 		            fillInAddress();
+		            geolocate();
 		        });
 		    }
 
@@ -133,6 +134,8 @@ angular.module('AdService', ['ui.bootstrap'])
 
 		                var latitude = position.coords.latitude;
 		                var longitude = position.coords.longitude;
+		                $rootScope.latitude = latitude;
+		                $rootScope.longitude = longitude;
 		                document.getElementById("latitude").value = latitude;
 		                document.getElementById("longitude").value = longitude;
 
@@ -165,6 +168,8 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	var description = $scope.ad.description;
 		    	var address = $rootScope.yourLocation;
 		    	var contact = $scope.ad.contact;
+		    	var latitude = $rootScope.latitude;
+		    	var longitude = $rootScope.longitude;
 		    	
 		    	var postAd = {
 		    			"title" : title,
@@ -175,7 +180,9 @@ angular.module('AdService', ['ui.bootstrap'])
 		    			"price":price,
 		    			"description": description,
 		    			"address": address,
-		    			"contact":contact
+		    			"contact":contact,
+		    			"latitude":latitude,
+		    			"longitude":longitude
 		    	}
 		    	formData.append('ad',angular.toJson(postAd,true));
 		    	console.log("Filled post ad form details",postAd);

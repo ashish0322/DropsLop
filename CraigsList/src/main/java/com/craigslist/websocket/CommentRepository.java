@@ -14,14 +14,14 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public abstract class TaskRepository extends TaskAppRespository<String, Task>{
+public abstract class CommentRepository extends CommentAppRespository<String, Comment>{
 	
 	@Autowired 
 	private BeanFactory factory;
 	
 	@PostConstruct
 	public void init(){
-		this.addObserver(this.factory.getBean(TaskRepositoryObserver.class));
-		System.out.println("after obeserver method invoked method in TaskRepo which notifies TaskRepositoryObserver");
+		this.addObserver(this.factory.getBean(CommentRepositoryObserver.class));
+		System.out.println("after obeserver method invoked method in TaskRepo which notifies CommentRepositoryObserver");
 	}
 }
