@@ -5,12 +5,14 @@ angular.module("layoutService",[])
 		$rootScope.authenticated = false;
 		$rootScope.onlyAdmin = false;
 		$rootScope.onlyUser = true;
-		
+		$rootScope.search = false;
 		$scope.selectedProduct = {};
 		
 		$rootScope.navBarClass  = "navbar navbar-inverse navbar-fixed-top";
 		$rootScope.navBarClass1 = "dropdown navbar-inverse";
 		$rootScope.footerNav = "navbar navbar-inverse";
+		
+		
 		
 		var username = "";
 		
@@ -26,7 +28,7 @@ angular.module("layoutService",[])
 		}
 		else{
 			//retrieve user session from userPersistenceService
-			
+			 $rootScope.wrapper = "page-wrapper";
 			var userData = userPersistenceService.getUserSessionData();
 			
 			console.log("retrieve user session from userPersistenceService",userData[1]);
@@ -142,106 +144,14 @@ angular.module("layoutService",[])
 				})
 		})
 		
-	.controller("productViewController",function(ApiService,$location,$rootScope,userPersistenceService,$scope, $localStorage,$routeParams,NotifyService,$sce){
-			console.log(" productViewController>>>");
-			$rootScope.comments = false;
-			$scope.selectedProduct = $routeParams.productId;
-			console.log("$scope.selectedProduct",$scope.selectedProduct);
-//			********************************************************* Load selected ad Function *********************************************************
-						
-			
-//				$scope.url = $sce.trustAsResourceUrl('https://www.angularjs.org');
-			
-			ApiService.call('/getSelectedProduct/'+$scope.selectedProduct)
-			.success(function(data,status){
-				if(data !=null){
-					console.log("Get Selected product",data);
-					$scope.selectedProduct = data;
-					var url = 'https://maps.google.com/maps?q='+data.latitude+','+data.longitude+'&hl=es;z=14&output=embed';
-					$scope.url = $sce.trustAsResourceUrl(url);
-					var href = 'https://maps.google.com/maps?q='+data.latitude+','+data.longitude+'&hl=es;z=14&output=embed'
-					$scope.href= $sce.trustAsResourceUrl(href);
-					console.log("$scope.selectedProduct ",$scope.selectedProduct );
-				}else{
-					
-				}
-			})
-			.error(function(data,status){
-				ApiService.exception(data,status);
-			});
-//			********************************************************* Load comments Function *********************************************************
-			
-			$scope.loadComments = function(){
-				
-				ApiService.call('/user/getComments/'+$scope.selectedProduct)
-					.success(function(data,status){
-						if(data !=null &&  !($.isEmptyObject(data))){
-							console.log("Get all comments",data)
-							$rootScope.comments = true;
-							$scope.comments = data;
-						}else{
-							$rootScope.comments = false;
-						}
-					})
-					.error(function(data,status){
-						ApiService.exception(data,status);
-					});
-				}
-			
-//			********************************************************* Add Comment function *********************************************************
-			
-			$scope.addComment = function(productId){
-				var user = $localStorage.user;
-				console.log("Inside addComment",productId,user.email);
-				
-				var comment={
-						"userId" :user.email,
-						"description":$scope.comment,
-						"productId":productId,
-						"commenterName":user.displayName
-				}
-				
-				console.log("add Comment",comment);
-				ApiService.post("/user/postComment",comment)
-				.success(function(data,status){
-							if(data =="Comment added Successfully"){
-								NotifyService.success("Comment added successfully");	
-								
-							}
-							else{
-								NotifyService.warning("Error adding comment!!","Please try again");
-							}
-						})
-				.error(function(data,status){
-					ApiService.exception(data,status);
-				});
-			}
-			
-			$scope.loadComments();
-		})
+
 		
 		
 		
-		.controller("productsViewController",function(ApiService,$location,$rootScope,userPersistenceService,$scope, $routeParams){
-			console.log(" productsViewController>>>");
-			$scope.selectedSubCat = $routeParams.subCatName;
-			console.log("$scope.selectedProduct",$scope.selectedSubCat);
-//			********************************************************* Load selected ad Function *********************************************************
-						
-			ApiService.call('/getSubCatProducts/'+$scope.selectedSubCat)
-			.success(function(data,status){
-				if(data !=null){
-					console.log("Get product under sub category",data);
-					$scope.subCatProducts = data;
-					console.log("$scope.subCatProducts  ",$scope.subCatProducts  );
-				}else{
-					
-				}
-			})
-			.error(function(data,status){
-				ApiService.exception(data,status);
-			});
-			
-		})
+	
+		
+		
+		
+
 		
 		

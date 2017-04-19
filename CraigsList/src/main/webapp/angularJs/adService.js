@@ -1,6 +1,6 @@
 angular.module('AdService', ['ui.bootstrap'])
 
-	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService,NotifyService){
+	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService,NotifyService,$sce){
 		console.log("Inside adController");
 		
 		$scope.ad= {};
@@ -91,7 +91,7 @@ angular.module('AdService', ['ui.bootstrap'])
 		        // populate the address fields in the form.
 		        google.maps.event.addListener(autocomplete, 'place_changed', function () {
 		            fillInAddress();
-		            geolocate();
+		            
 		        });
 		    }
 
@@ -113,6 +113,12 @@ angular.module('AdService', ['ui.bootstrap'])
 
 		        // Get each component of the address from the place details
 		        // and fill the corresponding field on the form.
+		        console.log("place.address_components",place.url);
+		        
+		        $rootScope.addressUrl = place.url;
+		        var url = place.url+'&output=embed';
+		        $rootScope.url = $sce.trustAsResourceUrl(url);
+		        $rootScope.href = $sce.trustAsResourceUrl(url);
 		        for (var i = 0; i < place.address_components.length; i++) {
 		            var addressType = place.address_components[i].types[0];
 		            if (componentForm[addressType]) {
@@ -134,8 +140,7 @@ angular.module('AdService', ['ui.bootstrap'])
 
 		                var latitude = position.coords.latitude;
 		                var longitude = position.coords.longitude;
-		                $rootScope.latitude = latitude;
-		                $rootScope.longitude = longitude;
+		              
 		                document.getElementById("latitude").value = latitude;
 		                document.getElementById("longitude").value = longitude;
 
@@ -168,8 +173,7 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	var description = $scope.ad.description;
 		    	var address = $rootScope.yourLocation;
 		    	var contact = $scope.ad.contact;
-		    	var latitude = $rootScope.latitude;
-		    	var longitude = $rootScope.longitude;
+		    	var addressUrl = $rootScope.addressUrl;
 		    	
 		    	var postAd = {
 		    			"title" : title,
@@ -181,8 +185,7 @@ angular.module('AdService', ['ui.bootstrap'])
 		    			"description": description,
 		    			"address": address,
 		    			"contact":contact,
-		    			"latitude":latitude,
-		    			"longitude":longitude
+		    			"addressUrl":addressUrl
 		    	}
 		    	formData.append('ad',angular.toJson(postAd,true));
 		    	console.log("Filled post ad form details",postAd);

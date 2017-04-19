@@ -163,8 +163,7 @@ public class AdServiceImpl implements AdService{
 										approvalStatus,
 										stringDate,
 										product.getContact(),
-										product.getLatitude(),
-										product.getLongitude());
+										product.getAddressUrl());
 		
 			newAd.setSpam(0);
 			productDao.create(newAd);
@@ -411,6 +410,22 @@ public class AdServiceImpl implements AdService{
 				else{
 					return null;
 				}
+	}
+//	********************************************************* Get All Products API (public) *********************************************************
+
+	@Override
+	@RequestMapping(value = "/api/getAllProducts", method = RequestMethod.GET)
+	public List<Product> getAllProducts() {
+		
+		List<Product> productsList = new ArrayList<>();
+			
+			productsList = productDao.getProductsList();
+					if(!productsList.isEmpty()){
+						return productsList;
+					}
+					else{
+						return null;
+					}
 	}
 
 }

@@ -70,21 +70,64 @@ public class SubCategoryServiceImpl implements SubCategoryService{
 	}
 
 	@Override
-	public String updateSubCategory(SubCategory SubCategory, long SubCategoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value="/api/admin/{subCategoryId}/updateSubCategory",method = RequestMethod.POST,
+	consumes = "application/json")
+	public String updateSubCategory(@RequestBody SubCategory SubCategory,@PathVariable long subCategoryId) {
+
+			String name = SubCategory.getName();
+			SubCategory subCat = new SubCategory();
+		try{
+			subCat = subCategoryDao.getById(subCategoryId);
+			subCat.setName(name);
+			}
+			catch(Exception e){
+			e.printStackTrace();
+			}
+		
+		try{
+			subCategoryDao.update(subCat);
+		}
+		catch (Exception ex) {
+		      return JSONObject.quote("Error updating the Subcategory: " + ex.toString());
+	    }
+	    return JSONObject.quote("Sub Category updated Successfully");
+	}
+	
+	
+
+	@Override
+	@RequestMapping(value="/api/admin/{id}/getSubCategory",method = RequestMethod.GET)
+	public SubCategory getSubCategory(@PathVariable long id) {
+		
+		SubCategory subCategory = null;
+		try{
+			subCategory = subCategoryDao.getById(id);
+		}
+		catch(Exception e){
+		e.printStackTrace();
+		}
+		return subCategory;
 	}
 
 	@Override
-	public SubCategory getSubCategory(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteSubCategory(long SubCategoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value="/api/admin/{subCategoryId}/deleteSubCategory",method = RequestMethod.GET)
+	public String deleteSubCategory(@PathVariable long subCategoryId) {
+		
+		SubCategory subCategory = null;
+		try{
+			subCategory = subCategoryDao.getById(subCategoryId);
+		}
+		catch(Exception e){
+		e.printStackTrace();
+		}
+		
+		try{
+		subCategoryDao.delete(subCategory);
+		}
+		catch(Exception ex){
+			return JSONObject.quote("Error updating the sub category: " + ex.toString());
+		}
+		return JSONObject.quote("Sub Category deleted Successfully");
 	}
 
 	@Override

@@ -76,7 +76,16 @@ angular.module("loginServivce",[])
 					username = userPersistenceService.getCookieData();
 					console.log("userPersistenceService.getCookieData",username);
 					
-					userPersistenceService.storeUserSession(data);
+					var userDta = {
+							userId:data.userId,
+							firstName:data.firstName,
+							lastName:data.lastName,
+							email:data.email,
+							userInfo:data.userInfo,
+							displayName:data.displayName
+					}
+					
+					userPersistenceService.storeUserSession(userDta);
 					$rootScope.displayName = username;
 					$rootScope.email = data.email;
 					$rootScope.lastLogin = data.userInfo.lastLoginDate;
@@ -99,7 +108,7 @@ angular.module("loginServivce",[])
 					        $scope.tasks = JSON.parse(message.data);
 					        $scope.$apply();        
 					    };
-					    
+					    $rootScope.wrapper = "page-wrapper";
 						document.getElementById("userCheck").style.display = 'none';
 						if(data.userInfo.role == 'admin'){
 						$rootScope.navBarClass = "navbar navbar-default";

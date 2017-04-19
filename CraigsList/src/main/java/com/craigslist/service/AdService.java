@@ -43,6 +43,7 @@ public interface AdService {
 	
 	public Product getSelectedProduct(long id);
 	
+	public List<Product> getAllProducts();
 	
 	public List<Product> getSubCatProducts(String subCatName);
 }

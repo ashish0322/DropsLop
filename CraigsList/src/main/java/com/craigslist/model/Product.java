@@ -81,8 +81,7 @@ public class Product {
 	@JsonBackReference(value="mappedToProduct")
     private User user;
 	
-	private double latitude;
-	private double longitude;
+	private String addressUrl;
 	
 	private String sellerEmail;
 	private String contact;
@@ -106,7 +105,7 @@ public class Product {
     public Product(String title, String purchasedYear, String address,String productName,String categoryName,
     		double price,String description,String photoName,String subCategoryName,String sellerEmail,
     		String sellerName,User user,SubCategory subCategory,String approvalStatus,String postedDate,
-    		String contact,double latitude,double longitude) {
+    		String contact,String addressUrl) {
         this.productName = productName;
         this.sellerName = sellerName;
         this.categoryName=categoryName;
@@ -123,8 +122,7 @@ public class Product {
         this.approvalStatus = approvalStatus;
         this.postedDate = postedDate;
         this.contact = contact;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.addressUrl = addressUrl;
     }
 
     public Product() {
@@ -306,20 +304,12 @@ public class Product {
 	}
 
 
-	public double getLatitude() {
-		return latitude;
+	public String getAddressUrl() {
+		return addressUrl;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setAddressUrl(String addressUrl) {
+		this.addressUrl = addressUrl;
 	}
 
 	public int getSpam() {

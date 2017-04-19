@@ -279,23 +279,22 @@ angular.module("adminService")
 					});
 			}
 //			********************************************************* Load sub Categories Function *********************************************************
-			$rootScope.edit = true;
-			$rootScope.update = false;
 			
 			
-			$scope.editSubCatClick = function(){
-				$rootScope.edit = false;
-				$rootScope.update = true;
+			
+			$scope.editSubCatClick = function(field){
+				 $scope.editing = $scope.subCategories.indexOf(field);
+			     $scope.newField = angular.copy(field);
+				
 			}
 			
-			$scope.updateSubCat = function(){
-				$rootScope.update = false;
-				$rootScope.edit = true;
-			}
 			$scope.cancelUpdate = function(){
 				console.log("Inside cancel update");
-				$rootScope.update = false;	
-				$rootScope.edit = true;
+				   if ($scope.editing !== false) {
+			            $scope.subCategories[$scope.editing] = $scope.newField;
+			            $scope.editing = false;
+			        }    
+				
 			}
 			
 			$scope.subCat ="";
@@ -329,12 +328,76 @@ angular.module("adminService")
 			
 //			********************************************************* Update sub Categories Function *********************************************************
 			$scope.updateSubCat = function(id){
-				console.log("Inside Update subCat",id);
+				
+				if ($scope.editing !== false) {
+				 var SubCategory = "";
+				 SubCategory =  $scope.subCategories[$scope.editing];
+				console.log("Inside update Sub Category",SubCategory);
+
+				ApiService.post('/admin/'+id+'/updateSubCategory',SubCategory)
+					.success(function(data,status){
+						if(data == "Sub Category updated Successfully"){
+							ngDialog.close();
+							
+							NotifyService.success("Sub Category updated Successfully");
+							
+						}
+						else{
+							ngDialog.close();
+							NotifyService.warning("Error Message","Failed to update Subcategory");
+						}
+					})
+					.error(function(data,status){
+						ApiService.exception(data,status);
+					})
+					 $scope.editing = false;
+				}
+				
 			}
 					
 //			********************************************************* Delete sub Categories Function *********************************************************
-			$scope.deleteCategory = function(id){
+			$scope.deleteSubCategory = function(id){
 				console.log("Inside DeletesubCat",id);
+				
+				$localStorage.deleteid = id;
+				ApiService.call('/admin/'+id+'/getSubCategory')
+				.success(function(data,status){
+					if(data.subCategoryId != null){
+						console.log("editSubCategory",data);
+						$rootScope.msg = data.name;
+						ngDialog.open({ 
+							template: 'html/confirmYesNoDialog.html',
+					         scope:$scope
+							});
+					}
+					else{
+						NotifyService.warning("Error Message","Failed to retrieve sub category");
+					}
+					
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				})
+				
+			}
+			
+			$scope.confirm = function(){
+				console.log("Inside delete function",$localStorage.deleteid);
+				ApiService.call('/admin/'+$localStorage.deleteid+'/deleteSubCategory')
+				.success(function(data,status){
+					if(data == "Sub Category deleted Successfully"){
+						ngDialog.close();
+						
+						NotifyService.success("Sub Category Deleted Succefully!!");
+						$scope.loadCategories();
+					}
+					else{
+						NotifyService.warning("Error Message","Failed to delete Subcategory");
+					}
+				})
+				.error(function(data,status){
+					ApiService.exception(data,status);
+				})
 			}
 			
 

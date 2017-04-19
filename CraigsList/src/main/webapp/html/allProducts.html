@@ -1,11 +1,7 @@
   <div ng-attr-id="{{wrapper}}">
   <br/><br/><br/>
-	<div class="row" style="margin-left:30px;">
-        <h2>{{selectedSubCat}}</h2>
-        <p>
-            Products returned under {{selectedSubCat}}
-        </p>
-         <span>  <label for="search">Search:</label>  <input ng-model="u" id="search"  placeholder="Filter text"></span>
+	<div class="row" style="margin-left:20px;">
+        <h2>All Products</h2>  <span>  <label for="search">Search:</label>  <input ng-model="u" id="search"  placeholder="Filter text"></span>
         	
            
               <label for="search">items per page:</label>
@@ -14,12 +10,13 @@
            		<br/>
            		<br/>
            		
-	<div class="row">  
-        <div class="col-sm-3" dir-paginate="product in subCatProducts | filter: u | itemsPerPage: pageSize">
+	<div class="row">      
+      
+        <div class="col-sm-3" dir-paginate="product in allProducts | filter: u | itemsPerPage: pageSize">
             <article class="col-item">
             	<div class="photo">
         			
-        			<a href="#/productDetailView/{{product.productId}}"> <img src="{{product.photoName}}" class="img-responsive" alt="Product Image" style="height:150px;width : 150px;/> </a>
+        			<a href="#/productDetailView/{{product.productId}}"> <img src="{{product.photoName}}" class="img-responsive" alt="Product Image" style="height:150px;width : 150px; /> </a>
         		</div>
         		<div class="info">
         			<div class="row">

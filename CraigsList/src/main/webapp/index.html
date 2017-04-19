@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html >
 <head>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3137599049805102",
+    enable_page_level_ads: true
+  });
+</script>
 <meta charset="ISO-8859-1">
 <title>Dropslop</title>
  <link rel="stylesheet" type="text/css" href="css/project.css">
@@ -163,29 +170,11 @@
        <ul class="nav navbar-left navbar-top-links" ng-show="authenticated">
  		<li><a ng-click="login();"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a ng-click="signUp();"><span class="glyphicon glyphicon-user"></span>Signup</a></li>
-        <li>
-            <form class="navbar-form" role="search">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="search" name="q">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-            </form>    
-        </li>
+        
        </ul>
         <!-- Top Navigation: Right Menu -->
         <ul class="nav navbar-right navbar-top-links" ng-show="!authenticated">
-         <li>
-            <form class="navbar-form" role="search">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="search" name="q">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-            </form>    
-        </li>
+       
             <li ng-class="navBarClass1">
                 <a class="dropdown-toggle" data-toggle="dropdown" >
                     <i class="fa fa-user fa-fw"></i>Hi {{displayName}}<b class="caret"></b>
@@ -246,7 +235,7 @@
                         <a href="#/admin/manageUsers" class="active"><i class="fa fa-user fa-fw"></i> Manage Users</a>
                     </li>
                      <li>
-                        <a href="#/admin/manageAds" class="active"><i class="fa fa-message fa-fw"></i> Manage Ads</a>
+                        <a href="#/admin/manageAds" class="active"><i class="fa fa-certificate fa-fw"></i> Manage Ads</a>
                     </li>
                         </ul>
 
@@ -280,25 +269,11 @@
                 <li class="dropdown-header">Recently Added</li>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                   <div class="carousel-inner">
-                    <div class="item active">
-                      <a href="#"><img src="" class="img-responsive" alt="product 1"></a>
-                      <h4><small>Summer dress floral prints</small></h4>
-                      <button class="btn btn-primary" type="button">49,99 </button>
-                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
-                    </div>
-                    <!-- End Item -->
-                    <div class="item">
-                      <a href="#"><img src="" class="img-responsive" alt="product 2"></a>
-                      <h4><small>Gold sandals with shiny touch</small></h4>
-                      <button class="btn btn-primary" type="button">9,99 </button>
-                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
-                    </div>
-                    <!-- End Item -->
-                    <div class="item">
-                      <a href="#"><img src="" class="img-responsive" alt="product 3"></a>
-                      <h4><small>Denin jacket stamped</small></h4>
-                      <button class="btn btn-primary" type="button">49,99 </button>
-                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
+                    <div class="item" ng-class="{active:!$index}" ng-repeat="product in products">
+                      <a href="#/productDetailView/{{product.productId}}"><img src="{{product.photoName}}" class="img-responsive" alt="product 1" style="height:100px;width:100px;margin-left:40px;"></a>
+                      <h4 style="margin-left:70px;"><small>{{product.productName}}</small></h4>
+                      <button class="btn btn-primary" type="button">$ {{product.price}} </button>
+                      <button href="" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
                     </div>
                     <!-- End Item -->
                   </div>
@@ -306,7 +281,7 @@
                 </div>
                 <!-- /.carousel -->
                 <li class="divider"></li>
-                <li><a href="">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+                <li><a href="#/viewAllProducts">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
               </ul>
             </li>
             <li class="col-sm-3" ng-repeat="cat in categoriesList">
@@ -332,7 +307,39 @@
     </div>
 	           
     </nav>
-
+		<div ng-show="search">
+		<div class="col-sm-3" ng-repeat="product in subCatProducts">
+		            <article class="col-item">
+		            	<div class="photo">
+		        			
+		        			<a href="#/productDetailView/{{product.productId}}"> <img src="{{product.photoName}}" class="img-responsive" alt="Product Image" /> </a>
+		        		</div>
+		        		<div class="info">
+		        			<div class="row">
+		        				<div class="price-details col-md-6">
+		        					<p class="details">
+		        						{{product.title}}
+		        					</p>
+		        					<h1>{{product.productName}}</h1>
+		        					<span class="price-new">${{product.price}}</span>
+		        				</div>
+		        			</div>
+		        				<div class="separator clear-left">
+		        				<p class="btn-add">
+		        					<i class="fa fa-bars"></i><a href="#/productDetailView/{{product.productId}}" class="hidden-sm">More Details</a>
+		        				</p>
+		        				<p class="btn-details">
+		        					<a href="" class="hidden-sm" data-toggle="tooltip" data-placement="top" title="Add to wish list"><i class="fa fa-thumbs-o-up"></i>12</a>
+		        					<a href="" class="hidden-sm" data-toggle="tooltip" data-placement="top" title="Compare"><i class="fa fa-eye"></i>34</a>
+		        				</p>
+		        			</div>
+		        				<div class="clearfix"></div>
+		        		</div>
+		        	</article>
+		        </div>
+		
+		
+		</div>
 <div ng-view></div>
 
 
@@ -358,7 +365,7 @@
 	<script type="text/javascript" src="angularJs/adService.js"></script>
 	<script type="text/javascript" src="angularJs/uploadService.js"></script>
 	<script type="text/javascript" src="angularJs/manageAdsController.js"></script>
-	
+	<script type="text/javascript" src="angularJs/allProductsController.js"></script>
 	
 	<!-- loading js files required by ui  -->
 	<script type="text/javascript" src="js/registration.js"></script>

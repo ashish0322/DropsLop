@@ -5,15 +5,17 @@
                 </div>
                 <ul class="list-group" ng-repeat="subCat in subCategories">
                    <li class="list-group-item" ng-show="subCat" >
-                   <input type="text" ng-model="subCat.name" name="name" id="name" ng-disabled="!isDisabled"/>
-  					<button class='btn btn-info btn-xs' ng-show="edit" ng-click="editSubCatClick();isDisabled = true"><span class="glyphicon glyphicon-edit"></span> Edit</button> 
-  					<button ng-click="updateSubCat(subCat.subCategoryId);isDisabled = false" ng-show="update" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> Update</button>
-  					<button ng-click="isDisabled = false;cancelUpdate()" ng-show="update"class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-minus"></span> Cancel</button>
-                	<button ng-click="deleteCategory(subCat.subCategoryId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button>
+                    <span data-ng-hide="editMode">{{subCat.name}}</span>
+           			 <input type="text" data-ng-show="editMode" data-ng-model="subCat.name" data-ng-required />
+                   
+  					<button class='btn btn-info btn-xs' data-ng-hide="editMode" data-ng-click="editMode = true; editSubCatClick(subCat)"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+  					 
+  					<button data-ng-click="editMode = false;updateSubCat(subCat.subCategoryId)" data-ng-show="editMode" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> Update</button>
+  					<button data-ng-click="editMode = false;cancelUpdate()" data-ng-show="editMode" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-minus"></span> Cancel</button>
+                	<button ng-click="deleteSubCategory(subCat.subCategoryId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</button>
                 	
                
                    </li>
                    <li ng-show="!subCat" style="color:red;">No Categories Found!!</li>
                 </ul>
 </div>
-
