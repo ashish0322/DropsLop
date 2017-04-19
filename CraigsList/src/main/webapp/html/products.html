@@ -1,0 +1,38 @@
+  <div id="page-wrapper">
+  <br/><br/>
+	<div class="row">
+        <h2>{{selectedSubCat}}</h2>
+        <p>
+            Products returned under {{selectedSubCat}}
+        </p>
+        <div class="col-sm-3" ng-repeat="product in subCatProducts">
+            <article class="col-item">
+            	<div class="photo">
+        			
+        			<a href="#/productDetailView/{{product.productId}}"> <img src="{{product.photoName}}" class="img-responsive" alt="Product Image" /> </a>
+        		</div>
+        		<div class="info">
+        			<div class="row">
+        				<div class="price-details col-md-6">
+        					<p class="details">
+        						{{product.title}}
+        					</p>
+        					<h1>{{product.productName}}</h1>
+        					<span class="price-new">${{product.price}}</span>
+        				</div>
+        			</div>
+        				<div class="separator clear-left">
+        				<p class="btn-add">
+        					<i class="fa fa-bars"></i><a href="#/productDetailView/{{product.productId}}" class="hidden-sm">More Details</a>
+        				</p>
+        				<p class="btn-details">
+        					<a href="" class="hidden-sm" data-toggle="tooltip" data-placement="top" title="Add to wish list"><i class="fa fa-thumbs-o-up"></i>12</a>
+        					<a href="" class="hidden-sm" data-toggle="tooltip" data-placement="top" title="Compare"><i class="fa fa-eye"></i>34</a>
+        				</p>
+        			</div>
+        				<div class="clearfix"></div>
+        		</div>
+        	</article>
+        </div>
+    </div>
+    </div>

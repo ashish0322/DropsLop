@@ -62,6 +62,11 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/productDetailView.html', 
 			      	controller: 'productViewController'
 			      	})
+			      	.when('/subCategoryDetailView/:subCatName', {
+			      	access:'public', 
+			      	templateUrl: 'html/products.html', 
+			      	controller: 'productsViewController'
+			      	})
 			    .otherwise({ redirectTo: '/error' })
 			    
 			    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

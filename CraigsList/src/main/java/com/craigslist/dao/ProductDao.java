@@ -139,4 +139,31 @@ public class ProductDao {
 	   
 	  }
 
+	  
+	  /**
+	   * Return the Approved ads under selected sub cat List
+	   */
+
+	  
+	  public List<Product> getApprovedProductsListUnderSubCat(String subCategoryName){
+		  String approvalStatus = "approved";
+		  String query = "from Product where approvalStatus = :approvalStatus and subCategoryName = :subCategoryName";
+		  
+		  List<Product> productsList = new ArrayList<>();
+		  
+		  try{
+			  productsList = entityManager
+					  			.createQuery(query)
+					  			.setParameter("approvalStatus", approvalStatus)
+					  			.setParameter("subCategoryName", subCategoryName)
+					  			.getResultList();
+			  if(productsList != null){
+				  return productsList;
+			  }
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return productsList;
+	  }
 }

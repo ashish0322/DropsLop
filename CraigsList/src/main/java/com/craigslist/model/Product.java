@@ -89,7 +89,7 @@ public class Product {
 	
     private String categoryName;
     
-    @Column(nullable = false)
+    
     private String subCategoryName;
     
     @ManyToOne
@@ -338,6 +338,8 @@ public class Product {
 		this.comments = comments;
 	}
 	
-	
+	public void addComment(Comment comment) {
+		getComments().add(comment);
+    }
 	
 }

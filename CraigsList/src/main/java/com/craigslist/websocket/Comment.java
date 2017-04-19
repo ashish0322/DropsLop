@@ -27,12 +27,12 @@ public class Comment {
 	@Id 
 	@GeneratedValue
 	@Column(name="commentId", unique = true, nullable = false)
-	private String commentId;
+	private long commentId;
 	  
 	private String userId;
 	private String commenterName;
 	  
-	private String productId;
+	private long productId;
 	  
 	private String description;
 	  
@@ -43,7 +43,7 @@ public class Comment {
 	@JsonBackReference(value="mappedToProd")
     private Product product;
 	
-	public Comment(String userId,String productId,String description,String commentedDate,String commenterName){
+	public Comment(String userId,long productId,String description,String commentedDate,String commenterName){
 		this.userId = userId;
 		this.productId = productId;
 		this.description = description;
@@ -51,6 +51,9 @@ public class Comment {
 		this.commenterName = commenterName;
 	}
 	  
+	public Comment(){
+		
+	}
 	  
 	public String getUserId() {
 		return userId;
@@ -58,12 +61,7 @@ public class Comment {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getProductId() {
-		return productId;
-	}
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
+	
 	public String getDescription() {
 		return description;
 	}
@@ -77,14 +75,23 @@ public class Comment {
 		this.commentedDate = commentedDate;
 	}
 
-
-	public String getCommentId() {
+	public long getCommentId() {
 		return commentId;
 	}
 
 
-	public void setCommentId(String commentId) {
+	public void setCommentId(long commentId) {
 		this.commentId = commentId;
+	}
+
+
+	public long getProductId() {
+		return productId;
+	}
+
+
+	public void setProductId(long productId) {
+		this.productId = productId;
 	}
 
 

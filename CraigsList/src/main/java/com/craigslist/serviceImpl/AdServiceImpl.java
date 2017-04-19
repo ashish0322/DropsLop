@@ -396,4 +396,21 @@ public class AdServiceImpl implements AdService{
 		return product;
 	}
 
+//	********************************************************* Get Products by sub Cat Id API (public) *********************************************************
+
+	@Override
+	@RequestMapping(value = "/api/getSubCatProducts/{subCatName}", method = RequestMethod.GET)
+	public List<Product> getSubCatProducts(@PathVariable String subCatName) {
+
+		List<Product> productsList = new ArrayList<>();
+		
+		productsList = productDao.getApprovedProductsListUnderSubCat(subCatName);
+				if(!productsList.isEmpty()){
+					return productsList;
+				}
+				else{
+					return null;
+				}
+	}
+
 }

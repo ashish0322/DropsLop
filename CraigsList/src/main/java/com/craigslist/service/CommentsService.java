@@ -13,7 +13,7 @@ import com.craigslist.websocket.Comment;
  */
 public interface CommentsService {
 	
-		public void addComment(Comment comment);
+		public String addComment(Comment comment);
 		
 		public List<Comment> getComments(long productId);
 
