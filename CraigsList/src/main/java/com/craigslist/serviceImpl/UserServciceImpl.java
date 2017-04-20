@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.craigslist.dao.SiteStatsDao;
 import com.craigslist.dao.UserDao;
 import com.craigslist.model.Session;
 import com.craigslist.model.User;
@@ -43,6 +44,9 @@ public class UserServciceImpl implements UserService{
   // Wire the UserDao used inside this controller.
 	  @Autowired
 	  private UserDao userDao;
+	  
+	  @Autowired
+	  private SiteStatsDao siteStatsDao;
 	  
 	  ObjectFactory objectFactory = new ObjectFactory();
 
@@ -258,6 +262,17 @@ public class UserServciceImpl implements UserService{
 		
 		return blockedUsersCount;
 	}
+	
+	@Override
+	@RequestMapping(value = "/api/admin/getPageViewsCount", method = RequestMethod.GET)
+	public double getPageviewsCount() {
+		
+		double pageViews = 0;
+		
+		pageViews = siteStatsDao.getPageViews();
+		
+		return pageViews;
+	}
 	// methods
 
 	public static Session getCurrentSession(HttpServletRequest request) {
@@ -295,6 +310,8 @@ public class UserServciceImpl implements UserService{
 		return userDao.update(user);
 		
 	}
+
+	
 
 	
 

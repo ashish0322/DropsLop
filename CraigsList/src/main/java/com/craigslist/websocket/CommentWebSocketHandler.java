@@ -3,6 +3,8 @@
  */
 package com.craigslist.websocket;
 
+import java.util.List;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -14,6 +16,9 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.craigslist.dao.SiteStatsDao;
+import com.craigslist.model.SiteStats;
 
 
 /**
@@ -27,6 +32,9 @@ public class CommentWebSocketHandler extends TextWebSocketHandler{
 	
 	@Autowired 
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private SiteStatsDao siteStatsDao;
 
 	@OnOpen
 	public void onOpen(Session session) throws Exception {
@@ -78,7 +86,26 @@ public class CommentWebSocketHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println(" CommentWebSocketHandler &&&&&&&&&&&&&&&7  After connection Established **********************");
 		System.out.println("Connected "+session.getId());
+		
+		SiteStats stat = null;
+		double clientVisited = 0;
+		if(siteStatsDao.getAll() == null || siteStatsDao.getAll().isEmpty()){
+		clientVisited = 1;
+		stat = new SiteStats();
+		stat.setPageViews(clientVisited);
+		siteStatsDao.create(stat);
+		}
+		else{
+			List<SiteStats> statsList = siteStatsDao.getAll();
+			for(SiteStats stats:statsList){
+				double persistedPageViews = stats.getPageViews();
+				double newPageView = persistedPageViews+1;
+				stats.setPageViews(newPageView);
+				siteStatsDao.update(stats);
+			}
+		}
 		try {
+			
 			this.clientRepository.add(new Client(session));
 		} catch (Exception e) {
 			System.out.println("Not able to open the connection ::::::::::::::: ");

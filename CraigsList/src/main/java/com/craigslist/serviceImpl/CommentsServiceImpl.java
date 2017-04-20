@@ -59,7 +59,9 @@ public class CommentsServiceImpl implements CommentsService{
 		
 		    try {
 		      Comment newComment = new Comment(comment.getUserId(), comment.getProductId(), comment.getDescription(), stringDate, comment.getCommenterName());
+		      commentsDao.getAllById(comment.getProductId());
 		      commentsDao.add(newComment);
+		      
 		    }
 		    catch (Exception ex) {
 		      return JSONObject.quote("Error adding comment: " + ex.toString());

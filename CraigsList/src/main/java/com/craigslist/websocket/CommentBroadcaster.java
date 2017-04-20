@@ -37,6 +37,7 @@ public class CommentBroadcaster implements Broadcaster<Comment>{
 		
 		System.out.println("broadcast method is called on CommentBroadcaster from CommentRepository Observer with taskrepo as input");
 		this.clients.forEach(client -> {
+			
 			try{
 				client.sendText(this.gson.toJson(task));
 			}catch (Exception e) {

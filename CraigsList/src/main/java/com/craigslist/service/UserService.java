@@ -32,4 +32,5 @@ public interface UserService {
 	
 	public long getUsersCount();
 	public long getBlockedUsersCount();
+	public double getPageviewsCount();
 }

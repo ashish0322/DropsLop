@@ -44,6 +44,7 @@ public class CommentRepositoryImpl extends CommentRepository
 	@Override
 	public void add(Comment comment) {
 		entityManager.persist(comment);
+		this.commentsList.add(comment);
 		this.publish();
 		
 	}

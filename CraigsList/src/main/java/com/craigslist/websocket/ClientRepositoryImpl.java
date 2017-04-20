@@ -28,8 +28,14 @@ public class ClientRepositoryImpl extends ClientRepository {
 	
 	@Override
 	public void remove(Client session) {
+		System.out.println("Inside client remove");
 		synchronized (this.clients) {
-			this.clients.remove(session);
+			for(Client client : this.clients){
+				
+					if(client.getId() == session.getId()){
+							this.clients.remove(client);
+					}
+			}
 		}
 	}
 	

@@ -45,6 +45,19 @@ angular.module("adminService",[])
 		
 //		********************************************************* Get Page Views Function *********************************************************
 
+		$scope.loadNumberOfPageViews = function($rootScope,$localStorage){
+					
+					ApiService.call("/admin/getPageViewsCount")
+						.success(function(data,status){
+							if(data !=null){
+								console.log("Get PageViews count",data)
+								$scope.pageViews = data;
+							}
+						})
+						.error(function(data,status){
+							ApiService.exception(data,status);
+						});
+					}
 
 //		********************************************************* Get Number of blocked users Function *********************************************************
 		
@@ -63,6 +76,7 @@ angular.module("adminService",[])
 			});
 		}		
 		
+		$scope.loadNumberOfPageViews();
 		$scope.loadNumberOfBlockedUsers();
 		$scope.loadNumberOfPendingAds();
 		$scope.loadNumberOfUsers();

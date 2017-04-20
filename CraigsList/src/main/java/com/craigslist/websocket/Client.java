@@ -20,7 +20,7 @@ public class Client {
 	private final WebSocketSession session;
 	
 	public Client(WebSocketSession session2){
-		this.id = this.toString();
+		this.id = session2.getId();
 		this.session = session2;
 	}
 	

@@ -29,34 +29,47 @@
 					      </md-tab>
 					      <md-tab label="Comments">
 					        <md-content class="md-padding">
-					          <h1 class="md-display-1">User Comments</h1>
-					          
+					        <h3 class="text-success">Comments</h3><span ng-show="!onlyUser">
+					          <label for="search" >Comments per page:</label>
+           								<input type="number" min="1" max="100"  ng-model="pageSize"></span> 
 					            <div class="well" ng-show="onlyUser">
 					            <h4>Login/SignUp to View/post comments</h4>
 					            </div>
-									    <div class="well" ng-show="!onlyUser">
-									        <h4>What is on your mind?</h4>
-									    <div class="input-group">
-									        <input type="text" id="userComment" ng-model="comment" class="form-control input-sm chat-input" placeholder="Write your message here..." />
-										    <span class="input-group-btn">     
-									            <a href="" ng-click="addComment(selectedProduct.productId)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span> Add Comment</a>
-									        </span>
-									    </div>
-									    <hr data-brackets-id="12673">
-											    <ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
-													<li  ng-show="!comments">No Comments Yet</li>
-													<li class="ui-state-default" ng-repeat="comment in comments" ng-show="comments">
-														<strong class="pull-left primary-font">{{comment.commenterName}}</strong>
-														<small class="pull-right text-muted"> <span
-															class="glyphicon glyphicon-time"></span>&nbsp;{{comment.commentedDate}}
-														</small>
-														</br>
-														{{comment.description}}
-														</li>
-													</br>
-								
-												</ul>
-									    </div>
+									    
+									 
+									  <div class="row" ng-show="!onlyUser">
+									    
+           								<br/>
+											<div class="col-md-12">
+											    <div class="blog-comment" >
+													<div class="post-comments" ng-show="!comments" >No Comments Yet</div>
+													<div class="input-group">
+												        <input type="text" id="userComment" ng-model="comment" class="form-control input-sm chat-input" placeholder="Write your message here..." />
+													    <span class="input-group-btn">     
+												            <a href="" ng-click="addComment(selectedProduct.productId)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span> Add Comment</a>
+												        </span>
+												    </div>
+													<ul class="comments">
+													<li class="clearfix" dir-paginate="comment in commentsList | itemsPerPage: pageSize" ng-show="comments">
+													
+													  <div class="post-comments">
+													      <p class="meta">{{comment.commentedDate}} <a href="#">{{comment.commenterName}}</a> says:</p>
+													      <p>
+													         {{comment.description}}
+													      </p>
+													  </div>
+													</li>
+												
+													</ul>
+												</div>
+											</div>
+											    <div ng-controller="OtherController" class="other-controller">
+										          <div class="text-center">
+										          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="html/admin/dirPagination.tpl.html"></dir-pagination-controls>
+										          </div>
+										        </div>
+										</div>
+									
 									
 					           </md-content>
 					      </md-tab>

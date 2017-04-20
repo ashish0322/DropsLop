@@ -60,6 +60,9 @@ angular.module("layoutService")
 			$rootScope.comments = false;
 			$scope.selectedProduct = $routeParams.productId;
 			console.log("$scope.selectedProduct",$scope.selectedProduct);
+			
+			$scope.currentPage = 1;
+			$scope.pageSize = 5;
 //			********************************************************* Load selected ad Function *********************************************************
 						
 			
@@ -91,7 +94,7 @@ angular.module("layoutService")
 						if(data !=null &&  !($.isEmptyObject(data))){
 							console.log("Get all comments",data)
 							$rootScope.comments = true;
-							$scope.comments = data;
+							$rootScope.commentsList = data;
 						}else{
 							$rootScope.comments = false;
 						}
@@ -119,7 +122,7 @@ angular.module("layoutService")
 				.success(function(data,status){
 							if(data =="Comment added Successfully"){
 								NotifyService.success("Comment added successfully");	
-								$scope.loadComments();
+								
 							}
 							else{
 								NotifyService.warning("Error adding comment!!","Please try again");
