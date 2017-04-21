@@ -34,11 +34,28 @@ angular.module('AdService', ['ui.bootstrap'])
 		}
 		
 		$scope.iconUpload = function(event) {
-			$scope.imageFile= event.target.files[0]; //FileList object
-			console.log($scope.imageFile);
+			console.log("$scope.iconUpload");
+			var file = event.target.files[0];
+			if (file != null && file != undefined) {
+//				if (file.size > 51200 || file.type !== "image/png") {
+					//file must be less than 50KB and of type png
+				console.log("$scope.iconUpload",file);
+				$scope.appIconError = false;
+				$scope.imageFile = file; //FileList object
+				console.log($scope.imageFile);
+					
 
-			
-		
+				} else {
+					$scope.appIconError = true;
+					$scope.imageFile = null;
+				}
+//			} else {
+//				//cancel event
+//				$scope.appIconError = false;
+//				$scope.appIcon = null;
+//
+//			}
+
 		};
 		
 		$scope.description = function(){
@@ -155,6 +172,23 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	
 		    	console.log("Inside submit of post ad");
 		    	
+		    	if (   
+						!$scope.ad.title ||
+						!$scope.ad.productName ||
+						!$scope.ad.category ||
+						!$scope.ad.subCategory ||
+						!$scope.ad.purchasedYear ||
+						!$scope.ad.price ||
+						!$scope.imageFile ||
+						!$scope.ad.description
+						){
+		    		console.log("Null check",$scope.ad);
+					$scope.errorFlag = true;
+
+				}
+				
+		    	else{
+		    		console.log("Not null");
 		    	$scope.file;
 		    	console.log("$scope.file",$scope.file);
 		    	var formData = new FormData();  
@@ -212,6 +246,7 @@ angular.module('AdService', ['ui.bootstrap'])
 					ApiService.exception(data,status);
 				});
 		    	
+		      }
 		    }
 		    
 
