@@ -114,6 +114,29 @@ public class ProductDao {
 			  productsList = entityManager
 					  			.createQuery(query)
 					  			.setParameter("approvalStatus", approvalStatus)
+					  			.setMaxResults(4)
+					  			.getResultList();
+			  if(productsList != null){
+				  return productsList;
+			  }
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return productsList;
+	  }
+	  
+	  public List<Product> getApprovedProductsList2(){
+		  String approvalStatus = "approved";
+		  String query = "from Product where approvalStatus = :approvalStatus";
+		  
+		  List<Product> productsList = new ArrayList<>();
+		  
+		  try{
+			  productsList = entityManager
+					  			.createQuery(query)
+					  			.setParameter("approvalStatus", approvalStatus)
+					  			.setMaxResults(3)
 					  			.getResultList();
 			  if(productsList != null){
 				  return productsList;

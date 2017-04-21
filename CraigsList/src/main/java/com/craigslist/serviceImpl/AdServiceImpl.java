@@ -342,6 +342,23 @@ public class AdServiceImpl implements AdService{
 							return null;
 						}
 			}
+
+//	********************************************************* Get Approved Ads API  *********************************************************
+
+	@Override
+	@RequestMapping(value = "/api/getApprovedAds1", method = RequestMethod.GET)
+	public List<Product> getApprovedProducts1() {
+		
+		List<Product> productsList = new ArrayList<>();
+				
+				productsList = productDao.getApprovedProductsList2();
+						if(!productsList.isEmpty()){
+							return productsList;
+						}
+						else{
+							return null;
+						}
+			}
 	
 	
 	/**

@@ -109,7 +109,7 @@ angular.module("layoutService",[])
 		}
 		
 		$scope.loadAdss = function($rootScope,$localStorage){	
-			ApiService.call("/getApprovedAds")
+			ApiService.call("/getApprovedAds1")
 				.success(function(data,status){
 					if(data !=null){
 						console.log("Get next top 4 ads",data);

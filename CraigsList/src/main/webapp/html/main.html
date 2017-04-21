@@ -5,28 +5,42 @@
 		 <div id="myCarousel" class="carousel slide">
 		  <!-- Indicators -->
 		  <ol class="carousel-indicators">
-		    <li data-target="#myCarousel" data-slide-to="0" class="item" ng-class="{active:!$index}"></li>
+		    <li data-target="#myCarousel" data-slide-to="0"  ng-class="{active:!$index}"></li>
 		    <li data-target="#myCarousel" data-slide-to="1"></li>
 		    <li data-target="#myCarousel" data-slide-to="2"></li>
 		    <li data-target="#myCarousel" data-slide-to="3"></li>
+		    <li data-target="#myCarousel" data-slide-to="4"></li>
+		    <li data-target="#myCarousel" data-slide-to="5"></li>
+		    <li data-target="#myCarousel" data-slide-to="6"></li>
 		  </ol>
 		
 		  <!-- Wrapper for slides -->
 		  <div class="carousel-inner" role="listbox">
-		    <div class="item active">
-		      <img src="images/1.jpg" alt="Image1">
+		    <div ng-class="{active:!$index}">
+		      <img src="images/1.jpg" alt="Image1" style="width : 100%;" >
 		    </div>
 		
 		    <div class="item">
-		      <img src="images/2.jpg" alt="Image2">
+		      <img src="images/2.jpg" alt="Image2" style="width : 100%;">
 		    </div>
 		
 		    <div class="item">
-		      <img src="images/3.jpg" alt="Image3">
+		      <img src="images/3.jpg" alt="Image3" style="width : 100%;">
 		    </div>
 		
 		    <div class="item">
-		      <img src="images/4.jpg" alt="Image4">
+		      <img src="images/4.jpg" alt="Image4" style="width : 100%;">
+		    </div>
+		     <div class="item">
+		      <img src="images/5.jpg" alt="Image5" style="width : 100%;">
+		    </div>
+		
+		    <div class="item">
+		      <img src="images/6.jpg" alt="Image6" style="width : 100%;">
+		    </div>
+		
+		    <div class="item">
+		      <img src="images/7.jpg" alt="Image7" style="width : 100%;">
 		    </div>
 		  </div>
 		
@@ -40,7 +54,7 @@
 		    <span class="sr-only">Next</span>
 		  </a>
 		
-			</div>
+</div>
 </nav>
 <div class="container_fluid">
 <nav class="hidden-xs">
@@ -103,7 +117,7 @@
                 </div>
                 <div class="item">
                     <div class="row">
-                        <div class="col-sm-3" ng-repeat="product in products1">
+                        <div class="col-sm-3" ng-repeat="product in products">
                             <div class="col-item">
                                 <div class="photo">
                                     <img src="{{product.photoName}}" class="img-responsive" alt="a" style="height:150px;width:150px;"/>
@@ -124,7 +138,7 @@
                                     </div>
                                     <div class="separator clear-left">
                                         <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="#" class="hidden-sm">Add to WishList</a></p>
+                                            <i class="fa fa-shopping-cart"></i><a href="" class="hidden-sm">Add to WishList</a></p>
                                         <p class="btn-details">
                                             <i class="fa fa-list"></i><a href="#/productDetailView/{{product.productId}}" class="hidden-sm">More details</a></p>
                                     </div>
@@ -180,9 +194,45 @@
                                     </div>
                                     <div class="separator clear-left">
                                         <p class="btn-add">
-                                            <i class="fa fa-shopping-cart"></i><a href="#" class="hidden-sm">Compare</a></p>
+                                            <i class="fa fa-shopping-cart"></i><a href="" class="hidden-sm">Compare</a></p>
                                         <p class="btn-details">
-                                            <i class="fa fa-list"></i><a href="" href="#/productDetailView/{{product.productId}}" class="hidden-sm">More details</a></p>
+                                            <i class="fa fa-list"></i><a  href="#/productDetailView/{{product.productId}}" class="hidden-sm">More details</a></p>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                
+                <div class="item">
+                    <div class="row">
+                        <div class="col-sm-4" ng-repeat="product in products1">
+                            <div class="col-item">
+                                <div class="photo">
+                                    <img src="{{product.photoName}}" class="img-responsive" alt="a" style="height:200px;width:200px;" />
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="price col-md-6">
+                                            <h5>
+                                                 {{product.productName}}</h5>
+                                            <h5 class="price-text-color">
+                                               ${{product.price}}</h5>
+                                        </div>
+                                        <div class="rating hidden-sm col-md-6">
+                                            <i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
+                                            </i><i class="price-text-color fa fa-star"></i><i class="price-text-color fa fa-star">
+                                            </i><i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="separator clear-left">
+                                        <p class="btn-add">
+                                            <i class="fa fa-shopping-cart"></i><a href="" class="hidden-sm">Compare</a></p>
+                                        <p class="btn-details">
+                                            <i class="fa fa-list"></i><a  href="#/productDetailView/{{product.productId}}" class="hidden-sm">More details</a></p>
                                     </div>
                                     <div class="clearfix">
                                     </div>

@@ -1,6 +1,6 @@
 angular.module('AdService', ['ui.bootstrap'])
 
-	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService,NotifyService,$sce){
+	.controller("adController",function($scope,$http,ApiService,ngDialog,$localStorage,$rootScope,uploadService,NotifyService,$sce,$location){
 		console.log("Inside adController");
 		
 		$scope.ad= {};
@@ -201,6 +201,8 @@ angular.module('AdService', ['ui.bootstrap'])
 							if(data!=""){
 								console.log("Inside post ad",data);
 								NotifyService.success("Your Ad has been sent for admin approval!!");
+								$location.path('/user/viewPostings');
+								
 							}
 							else{
 								NotifyService.warning("Error Message","Failed to submit Ad");

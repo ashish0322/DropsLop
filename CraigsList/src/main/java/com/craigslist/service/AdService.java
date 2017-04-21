@@ -35,6 +35,8 @@ public interface AdService {
 	
 	public List<Product> getApprovedProducts();
 	
+	public List<Product> getApprovedProducts1();
+	
 	public Product getAdByUser(long id);
 	
 	public String removeAdByUser(long id);
