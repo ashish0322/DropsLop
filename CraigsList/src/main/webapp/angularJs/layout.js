@@ -7,7 +7,8 @@ angular.module("layoutService",[])
 		$rootScope.onlyUser = true;
 		$rootScope.search = false;
 		$scope.selectedProduct = {};
-		
+		 $scope.images = [ 1, 2, 3, 4, 5, 6, 7];
+
 		$rootScope.navBarClass  = "navbar navbar-inverse navbar-fixed-top";
 		$rootScope.navBarClass1 = "dropdown navbar-inverse";
 		$rootScope.footerNav = "navbar navbar-inverse";
