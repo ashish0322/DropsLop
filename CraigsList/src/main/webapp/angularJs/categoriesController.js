@@ -99,6 +99,9 @@ angular.module("adminService")
 
 //			********************************************************* Load Categories Function *********************************************************
 			
+			$scope.currentPage = 1;
+			$scope.pageSize = 5;
+			
 			$scope.loadCategories = function($rootScope,$localStorage){
 			
 			ApiService.call("/getCategories")
@@ -366,7 +369,7 @@ angular.module("adminService")
 						console.log("editSubCategory",data);
 						$rootScope.msg = data.name;
 						ngDialog.open({ 
-							template: 'html/confirmYesNoDialog.html',
+							template: 'html/confirmYesNoDialogg.html',
 					         scope:$scope
 							});
 					}
@@ -381,7 +384,7 @@ angular.module("adminService")
 				
 			}
 			
-			$scope.confirm = function(){
+			$scope.confirmm = function(){
 				console.log("Inside delete function",$localStorage.deleteid);
 				ApiService.call('/admin/'+$localStorage.deleteid+'/deleteSubCategory')
 				.success(function(data,status){

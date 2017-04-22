@@ -232,7 +232,7 @@ angular.module('AdService', ['ui.bootstrap'])
 		    	
 //		    	ApiService.post('/user/'+$rootScope.email+'/postAd'+image,postAd)
 				.success(function(data,status){
-							if(data!=""){
+					if(data!= null){
 								console.log("Inside post ad",data);
 								NotifyService.success("Your Ad has been sent for admin approval!!");
 								$location.path('/user/viewPostings');

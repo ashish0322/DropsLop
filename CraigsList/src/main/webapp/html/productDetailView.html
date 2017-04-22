@@ -19,6 +19,7 @@
 					            <label>Price :  </label><span>&nbsp;&nbsp;$&nbsp;{{selectedProduct.price}}</span><br/>
 					            <label>Description :  </label><span>&nbsp;&nbsp;&nbsp;{{selectedProduct.description}}</span><br/>
 					             <label>Seller Name :  </label><span>&nbsp;&nbsp;&nbsp;{{selectedProduct.sellerName}}</span><br/>
+					               <label>Seller Contact :  </label><span>&nbsp;&nbsp;&nbsp;{{selectedProduct.contact}}</span><br/>
 					             <label>Seller Address :  </label><span>&nbsp;&nbsp;&nbsp;{{selectedProduct.address}}</span><br/>
 					             	<iframe width="300" height="170" frameborder="0" scrolling="no" marginheight="0" 
 					             	marginwidth="0" 
@@ -80,8 +81,13 @@
 					          <div class="well" ng-show="onlyUser">
 					            <h4>Login/SignUp to contact seller</h4>
 					            </div>
-					          <p ng-show="!onlyUser">Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-					        </md-content>
+					            <p>
+									Click this link to email seller:
+									<button class="btn btn-info btn-lg">
+									<a ng-href="mailto:{{selectedProduct.sellerEmail}}?Subject=I am interested in your Dropslop Ad&body=I%20am%20interested%20in%20your%20ad." target="_top">Email Seller</a>
+									</button>
+									</p>
+					          </md-content>
 					      </md-tab>
 					    </md-tabs>
 					  </md-content>

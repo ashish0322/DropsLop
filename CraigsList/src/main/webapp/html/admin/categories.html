@@ -12,6 +12,11 @@
   <div class="row col-md-12  custyle">
     <table class="table table-striped custab">
     <thead>
+     <span>  <label for="search">Search:</label>  <input ng-model="u" id="search"  placeholder="Filter text"></span>
+        	
+           
+              <label for="search">&nbsp;Items per page:</label>
+           		<input type="number" min="1" max="100"  ng-model="pageSize"></span> 
     	<button ng-click="addCategory();" class="btn btn-primary btn-md pull-right"><b>+</b> Add New Category</button>
     	<br/>
         <tr>
@@ -22,7 +27,7 @@
             
         </tr>
     </thead>
-            <tr ng-repeat="category in categories" ng-show="cat">
+            <tr dir-paginate="category in categories | filter: u | itemsPerPage: pageSize" ng-show="cat">
                 <td>{{ category.title }}</td>
                 <td>{{ category.description }}</td>
                 
@@ -40,6 +45,10 @@
             <tr ng-show="!cat"><td style="color:red;">No Categories Found!!</td></tr>
     </table>
     </div>
-	 
+	  <div ng-controller="OtherController" class="other-controller">
+			          <div class="text-center">
+			          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="html/admin/dirPagination.tpl.html"></dir-pagination-controls>
+			          </div>
+			        </div>
     		
     </div>

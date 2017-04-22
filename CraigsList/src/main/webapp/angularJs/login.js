@@ -96,6 +96,7 @@ angular.module("loginServivce",[])
 						$rootScope.homePage = "";
 					    $rootScope.wrapper = "page-wrapper";
 						document.getElementById("userCheck").style.display = 'none';
+						
 						if(data.userInfo.role == 'admin'){
 						$rootScope.navBarClass = "navbar navbar-default";
 						$rootScope.navBarClass1 ="dropdown navbar-default";

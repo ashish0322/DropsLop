@@ -6,7 +6,7 @@ angular.module("layoutService")
 			
 			
 			$scope.currentPage = 1;
-			$scope.pageSize = 5;
+			$scope.pageSize = 12;
 			$scope.filteredProducts = [];
 			$rootScope.allProducts = [];
 
@@ -122,7 +122,7 @@ angular.module("layoutService")
 				.success(function(data,status){
 							if(data =="Comment added Successfully"){
 								NotifyService.success("Comment added successfully");	
-								
+								$scope.comment = "";
 							}
 							else{
 								NotifyService.warning("Error adding comment!!","Please try again");
