@@ -42,10 +42,33 @@ public class ProductDao {
 
 	  public List<Product> getProductsList(){
 		  
+		 
+		  
 		  List<Product> productsList = new ArrayList<>();
-		  String query = "select p from Product p";
+		  String query = "from Product";
 		  try{
-			  productsList = entityManager.createQuery(query).getResultList();
+			  productsList = entityManager.createQuery(query)
+					  
+			  			.getResultList();
+					  
+		  }
+		  catch (Exception e) {
+			e.printStackTrace();
+		}
+		  return productsList;
+	  }
+	  
+	  public List<Product> getProductsList1(){
+		  String approvalStatus = "approved";
+		 
+		  
+		  List<Product> productsList = new ArrayList<>();
+		  String query = "from Product where approvalStatus = :approvalStatus";
+		  try{
+			  productsList = entityManager.createQuery(query)
+					  .setParameter("approvalStatus", approvalStatus)
+			  			.getResultList();
+					  
 		  }
 		  catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +137,6 @@ public class ProductDao {
 			  productsList = entityManager
 					  			.createQuery(query)
 					  			.setParameter("approvalStatus", approvalStatus)
-					  			.setMaxResults(4)
 					  			.getResultList();
 			  if(productsList != null){
 				  return productsList;
@@ -136,7 +158,6 @@ public class ProductDao {
 			  productsList = entityManager
 					  			.createQuery(query)
 					  			.setParameter("approvalStatus", approvalStatus)
-					  			.setMaxResults(3)
 					  			.getResultList();
 			  if(productsList != null){
 				  return productsList;

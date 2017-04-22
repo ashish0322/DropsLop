@@ -8,7 +8,7 @@ angular.module("adminService")
 			$scope.approved = 'pending';
 			
 			$scope.currentPage = 1;
-			$scope.pageSize = 5;
+			$scope.pageSize = 10;
 			$scope.filteredAds = [];
 			$scope.users = [];
 			

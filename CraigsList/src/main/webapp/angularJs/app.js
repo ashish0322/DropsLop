@@ -72,6 +72,11 @@ var dropslop = angular.module("dropslop",["ngRoute",'config','services','ngDialo
 			      	templateUrl: 'html/allProducts.html', 
 			      	controller: 'allProductsViewController'
 			      	})
+			      	.when('/siteBuiltBy', {
+			      	access:'public', 
+			      	templateUrl: 'html/builtBy.html', 
+			      	controller: 'layoutController'
+			      	})
 			      
 			    .otherwise({ redirectTo: '/error' })
 			    

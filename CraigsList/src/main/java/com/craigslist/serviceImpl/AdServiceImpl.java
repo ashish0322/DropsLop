@@ -436,7 +436,7 @@ public class AdServiceImpl implements AdService{
 		
 		List<Product> productsList = new ArrayList<>();
 			
-			productsList = productDao.getProductsList();
+			productsList = productDao.getProductsList1();
 					if(!productsList.isEmpty()){
 						return productsList;
 					}

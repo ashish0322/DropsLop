@@ -93,7 +93,7 @@ angular.module("loginServivce",[])
 						console.log("Inside get user login",data);
 						ngDialog.close();
 						
-						$rootScope.homePage = "";
+						
 					    $rootScope.wrapper = "page-wrapper";
 						document.getElementById("userCheck").style.display = 'none';
 						
@@ -102,9 +102,11 @@ angular.module("loginServivce",[])
 						$rootScope.navBarClass1 ="dropdown navbar-default";
 						$rootScope.footerNav = "navbar navbar-default";
 						$rootScope.onlyAdmin = false;
+						$rootScope.homePage = "";
 						$location.path("/admin/adminDashboard");
 						}
 						else{
+							$rootScope.homePage = "";
 							$rootScope.authenticated = false;
 							$rootScope.onlyAdmin = true;
 							$rootScope.onlyUser = false;

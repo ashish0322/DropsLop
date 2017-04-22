@@ -97,8 +97,19 @@ angular.module("layoutService",[])
 			.success(function(data,status){
 				if(data !=null){
 					console.log("Get top 4 ads",data);
-					$scope.products = data;
 					
+					var products = [];
+					var products2=[];
+					for(var i=0 ;i<=3; i++){
+						products.push(data[i]);
+					}
+					for(i=4;i<=7;i++){
+						products2.push(data[i]);
+					}
+					$scope.products = products;
+					$scope.products2 = products2;
+					console.log("$scope.produts",$scope.products );
+					console.log("$scope.produts2",$scope.products2 );
 				}else{
 					
 				}
@@ -113,8 +124,18 @@ angular.module("layoutService",[])
 			ApiService.call("/getApprovedAds1")
 				.success(function(data,status){
 					if(data !=null){
-						console.log("Get next top 4 ads",data);
-						$scope.products1 = data;
+						var products1 = [];
+						var products3=[];
+						for(var i=0 ;i<=2; i++){
+							products1.push(data[i]);
+						}
+						for(i=3;i<=5;i++){
+							products3.push(data[i]);
+						}
+						$scope.products1 = products1;
+						$scope.products3 = products3;
+//						console.log("Get next top 4 ads",data);
+//						$scope.products1 = data;
 						
 					}else{
 						
