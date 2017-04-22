@@ -49,7 +49,7 @@
                             <td>{{ad.approvalStatus}}</td>
                              <td>
                                <button ng-hide="ad.approvalStatus=='approved' || ad.approvalStatus=='expired'" class='btn btn-edit btn-xs' ng-click="editPosting(ad.productId);"><span class="glyphicon glyphicon-pencil"></span> Edit</button> 
-                				<button ng-hide="ad.approvalStatus=='expired'" ng-click="deletePosting(ad.productId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Del</button>
+                				<button ng-hide="ad.approvalStatus=='expired'" ng-click="deletePosting(ad.productId);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Sold</button>
                             </td>
                           </tr>
                     </tbody>
