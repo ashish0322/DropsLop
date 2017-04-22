@@ -48,8 +48,8 @@ angular.module("loginServivce",[])
 			console.log("inside login function");
 		
 			var user =	{
-					email:$scope.user.email,
-					password:$scope.user.password
+					email:$scope.user.emailLogin,
+					password:$scope.user.passwordLogin
 				}
 
 //	            AuthenticationService.ClearCredentials();
@@ -93,7 +93,7 @@ angular.module("loginServivce",[])
 						console.log("Inside get user login",data);
 						ngDialog.close();
 						
-					
+						$rootScope.homePage = "";
 					    $rootScope.wrapper = "page-wrapper";
 						document.getElementById("userCheck").style.display = 'none';
 						if(data.userInfo.role == 'admin'){

@@ -1,27 +1,62 @@
-<div class="row" style="margin-top:20px">
-<div class="col-xs-12">
+<div class="row" style="margin-top: 20px">
+	<div class="col-xs-12">
 		<form role="form" name="myForm" novalidate>
 			<fieldset>
 				<h3>Add Category</h3>
 				<hr class="colorgraph">
-				
-				<div class="form-group" ng-show="myForm.title.$dirty && myForm.title.$invalid" style="color:red;margin-left:10px;"></div>
-				<div class="form-group" ng-show="myForm.title.$error.required" style="color:red;margin-left:10px;">* Title Required</div>
+
+				<div class="form-group"
+					ng-show="myForm.title.$dirty && myForm.title.$invalid"
+					style="color: red; margin-left: 10px;"></div>
+				<div class="form-group" ng-show="myForm.title.$error.required"
+					style="color: red; margin-left: 10px;">* All fields are required </div>
 				<div class="form-group">
-                    <input type="text" ng-model="category.title" name="title" id="name" class="form-control input-lg" ng-blur="checkCategory()" placeholder="Category Name">
+					<input type="text" ng-model="category.title" name="title" id="name"
+						class="form-control input-lg" ng-blur="checkCategory()"
+						placeholder="Category " required="required"
+						ng-pattern="/^[A-Za-z ]+$/">
 				</div>
-				
-				
-				<div class="form-group" id ="categoryCheck" style="color:red;margin-left:10px;display:none;">*{{categoryCheck}}</div>
+
+				<div class="form-group" style="color: red; margin-left: 10px;"
+					ng-show="myForm.title.$touched && myForm.title.$invalid">
+					<div ng-show="myForm.title.$error.required">Category name is
+						required.</div>
+				</div>
+				<div class="form-group" style="color: red; margin-left: 10px;"
+					ng-show="myForm.title.$invalid">
+					<div ng-show="myForm.title.$error.pattern">Only alphabets
+						permitted for first name.</div>
+				</div>
+
+
+				<div class="form-group" id="categoryCheck"
+					style="color: red; margin-left: 10px; display: none;">*{{categoryCheck}}</div>
 				<div class="form-group">
-                    <input type="text" ng-model="category.description" id="description" class="form-control input-lg" placeholder="Description">
+					<input type="text" ng-model="category.description" id="description" name="description"
+						class="form-control input-lg" placeholder="Description"
+						required="required" ng-pattern="/^[A-Za-z ]+$/">
 				</div>
+				<div class="form-group" style="color: red; margin-left: 10px;"
+					ng-show="myForm.description.$touched && myForm.description.$invalid">
+					<div ng-show="myForm.description.$error.required">Description is
+						required.</div>
+				</div>
+				<div class="form-group" style="color: red; margin-left: 10px;"
+					ng-show="myForm.description.$invalid">
+					<div ng-show="myForm.description.$error.pattern">Only alphabets
+						permitted for first name.</div>
+				</div>
+
+
+
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12">
-                        <input type="button" ng-click="createCategory();" class="btn btn-lg btn-primary btn-block" value="ADD">
+						<input type="button" ng-click="createCategory();"
+							class="btn btn-lg btn-primary btn-block" value="ADD"
+							ng-disabled="myForm.$invalid">
 					</div>
 				</div>
 			</fieldset>
 		</form>
-</div>
+	</div>
 </div>

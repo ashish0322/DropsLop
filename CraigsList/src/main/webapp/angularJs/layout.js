@@ -13,7 +13,7 @@ angular.module("layoutService",[])
 		$rootScope.navBarClass1 = "dropdown navbar-inverse";
 		$rootScope.footerNav = "navbar navbar-inverse";
 		
-		
+		$rootScope.homePage = "/";
 		
 		var username = "";
 		
@@ -136,7 +136,10 @@ angular.module("layoutService",[])
 			ApiService.call("/logout")
 				.success(function(data,status){
 					console.log("Logout Success");
+					$rootScope.wrapper = "";
+					$rootScope.homePage = "/";
 					$location.path('/');
+					
 					userPersistenceService.clearCookieData();
 
 				})

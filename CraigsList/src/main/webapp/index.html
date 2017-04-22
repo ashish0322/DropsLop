@@ -34,6 +34,7 @@
 	<link href="css/tabbed.css" rel="stylesheet">
 	<link href="css/products.css" rel="stylesheet">
 	<link href="css/comments.css" rel="stylesheet">
+	<link href="css/footer.css" rel="stylesheet">
 	
 	 
     <!-- Custom Fonts -->
@@ -51,6 +52,7 @@
 	<script src="vendor/angular-1.5.6/angular-animate.js"></script>
 	<script src="vendor/angular-1.5.6/angular-aria.js"></script>
 
+	<link href="https://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<!-- Angular UI router -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js"></script>
 	
@@ -155,7 +157,7 @@
     <nav ng-class="navBarClass" role="navigation">
     	
         <div class="navbar-header">
-            <a class="navbar-brand" href="">DropsLop</a>
+            <a class="navbar-brand" ng-href="#{{homePage}}">DropsLop</a>
         </div>
 		
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -378,13 +380,67 @@
 	<script src="js/startmin.js"></script>
 	<script type="text/javascript" src="js/registration.js"></script>
 </div>	
-<footer class="navbar navbar-fixed-bottom" style="background-color: #545145;margin-bottom: -25px;">
-  <div ng-class="footerNav">
-    <div class="container">
-      <p class="navbar-text pull-left">© Fantastic Four</p>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 footer-col">
+        <div class="logofooter"> DropSlop</div>
+        <p>This is the enhanced version of Craigslist where you can find products with an easy search, post an ad in simple steps. for any assistance call or mail our customer service 24/7. </p>
+        <p><i class="fa fa-map-pin"></i> #268, Huntington Avenue, Boston, USA</p>
+        <p><i class="fa fa-phone"></i> Phone (USA) : +1 631 304 8247</p>
+        <p><i class="fa fa-envelope"></i> E-mail : info@dropslop.com</p>
+        
+      </div>
+      <div class="col-md-3 col-sm-6 footer-col">
+        <h6 class="heading7">GENERAL LINKS</h6>
+        <ul class="footer-ul">
+          <li><a href="#"> Help</a></li>
+          <li><a href="#"> Privacy Policy</a></li>
+          <li><a href="#"> Terms & Conditions</a></li>
+          <li><a href="#"> Safety Tips</a></li>
+          <li><a href="#"> Tour with site</a></li>
+          <li><a href="#"> Complaints</a></li>
+          <li><a href="#"> Frequently Ask Questions</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 col-sm-6 footer-col">
+        <h6 class="heading7">BLOG POSTS</h6>
+        <div class="post">
+          <p>How to identify whether a product is good or bad <span>April 22,2017</span></p>
+          <p>Check whether a seller is ideal or fake: Follow the simple steps<span>April 22,2017</span></p>
+          <p>Post an advertisement to get more views: Check the simple video <span>April 22,2017</span></p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 footer-col">
+        <h6 class="heading7">Social Media</h6>
+        <ul class="footer-social">
+          <li><i class="fa fa-linkedin social-icon linked-in" aria-hidden="true"></i></li>
+          <li><i class="fa fa-facebook social-icon facebook" aria-hidden="true"></i></li>
+          <li><i class="fa fa-twitter social-icon twitter" aria-hidden="true"></i></li>
+          <li><i class="fa fa-google-plus social-icon google" aria-hidden="true"></i></li>
+        </ul>
+      </div>
     </div>
   </div>
-  
 </footer>
+<!--footer start from here-->
+
+<div class="copyright">
+  <div class="container">
+    <div class="col-md-6">
+      <p>© 2017 - All Rights with DropSlopTeam</p>
+    </div>
+    <div class="col-md-6">
+      <ul class="bottom_ul">
+        
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Faq's</a></li>
+        <li><a href="#">Contact us</a></li>
+        <li><a href="#">Site Map</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
 </body>
 </html>

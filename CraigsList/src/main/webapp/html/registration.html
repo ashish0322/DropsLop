@@ -2,46 +2,113 @@
 
 <div class="row">
     <div class="col-xs-12"  >
-		<form  ng-submit="register()">
-			<h2 align="center">Please Sign Up<br/> <small>It's free and always will be.</small></h2>
-			<hr class="colorgraph">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="form-group">
-                        <input type="text" ng-model="user.first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" required>
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="form-group">
-						<input type="text" ng-model="user.last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" required>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="user.display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3" required>
-			</div>
-			<div class="form-group">
-				<input type="text" ng-model="user.email" id="email" class="form-control input-lg" placeholder="Email Address" ng-blur="checkEmail()" tabindex="4" required autocomplete="off">
-			</div>
-			<div class="form-group" id ="emailCheck" style="color:red;margin-left:10px;display:none;">*{{emailCheck}}</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="form-group">
-						<input type="password" ng-model="user.password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5" required autocomplete="off">
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<div class="form-group">
-						<input type="password" ng-model="user.password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6" required autocomplete="off">
-					</div>
-				</div>
-			</div>
-			
-			<hr class="colorgraph">
-			<div class="row">
-				<div class="col-xs-12"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-				
-			</div>
-		</form>
-	</div>
+        <form  ng-submit="register()" name="signUpForm"  novalidate>
+            <h2 align="center">Please Sign Up<br/> <small>It's free and always will be.</small></h2>
+            <hr class="colorgraph">
+
+            <!-- FIRST NAME -->
+            <div class="form-group">
+                <input type="text" ng-model="user.first_name" id="first_name" name="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1" ng-pattern="/^[A-Za-z ]+$/" required>
+            </div>
+
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.first_name.$touched && signUpForm.first_name.$invalid">
+                <div ng-show="signUpForm.first_name.$error.required">First
+                    Name is required.</div>
+            </div>
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.first_name.$invalid">
+                <div ng-show="signUpForm.first_name.$error.pattern">Only
+                    alphabets permitted for first name.</div>
+            </div>
+
+
+            <!-- LAST NAME -->
+            <div class="form-group">
+                <input type="text" ng-model="user.last_name" id="last_name" name="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2" ng-pattern="/^[A-Za-z ]+$/" required>
+            </div>
+
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.last_name.$touched && signUpForm.last_name.$invalid">
+                <div ng-show="signUpForm.last_name.$error.required">Last Name
+                    is required.</div>
+            </div>
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.last_name.$invalid">
+                <div ng-show="signUpForm.last_name.$error.pattern">Only
+                    alphabets permitted for last name.</div>
+            </div>
+
+            <!-- DISPLAY NAME -->
+            <div class="form-group">
+                <input type="text" ng-model="user.display_name" id="display_name" name="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3" 
+                       ng-pattern="/^[A-Za-z ]+$/" required>
+            </div>
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.display_name.$touched && signUpForm.display_name.$invalid">
+                <div ng-show="signUpForm.display_name.$error.required">
+                    Display Name is required.</div>
+            </div>
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.display_name.$invalid">
+                <div ng-show="signUpForm.display_name.$error.pattern">Only
+                    alphabets permitted for display name.</div>
+            </div>
+
+
+
+            <!-- Email  -->
+            <div class="form-group">
+                <input type="text" ng-model="user.email" id="email" name="email" class="form-control input-lg" placeholder="Email Address" ng-blur="checkEmail()" tabindex="4" 
+                ng-pattern = '/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
+                required autocomplete="off">
+            </div>
+            <div class="form-group" id ="emailCheck" style="color:red;margin-left:10px;display:none;">{{emailCheck}}</div>
+            
+                        <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.email.$touched && signUpForm.email.$invalid">
+                <div ng-show="signUpForm.email.$error.required">
+                    Email is required.</div>
+            </div>
+            <div class="form-group" style="color: red; margin-left: 10px;"
+                 ng-show="signUpForm.email.$invalid">
+                <div ng-show="signUpForm.email.$error.pattern">Enter valid email</div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="password" ng-model="user.password" id="password" class="form-control input-lg" placeholder="Password" ng-keyup="checkPasswordMatch()" tabindex="5" required autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <input type="password" ng-model="user.password_confirmation" id="password_confirmation" class="form-control input-lg" ng-keyup="checkPasswordMatch()"  placeholder="Confirm Password" tabindex="6" required autocomplete="off">
+                    </div>	
+                </div>
+            </div>
+            
+            
+            <span class="form-group" style="color: red; margin-left: 10px;">
+                <span id="divCheckPasswordMatch">
+                </span>
+            </span>
+            
+                        <span class="form-group" style="color: green; margin-left: 10px;">
+                <span id="divCheckPasswordMatchGreen">
+                </span>
+            </span>
+            
+            
+
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-xs-12"><input type="submit"  id="buttonRegister" value="Register" ng-disabled="signUpForm.$invalid"
+                
+                 class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+
+            </div>
+        </form>
+    </div>
 </div>
